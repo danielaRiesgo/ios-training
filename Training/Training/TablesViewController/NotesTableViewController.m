@@ -14,13 +14,18 @@
 
 @property (strong, nonatomic) NSArray * notes;
 
+@property (weak, nonatomic) IBOutlet UITableView * tableView;
+
 @end
 
 @implementation NotesTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    Note* n = [[Note alloc] initWithTitle:@"Loren ipsm lorel, commenset	in abem simet" detail:@"Esta nota es corta"];
+    self.notes = @[n];
+    [self.tableView reloadData];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -34,6 +39,10 @@
     Note* note = [self.notes objectAtIndex:indexPath.row];
     cell.titleLabel.text = note.title;
     return cell;
+}
+
+- (NSUInteger)tableViewHeight {
+    return self.tableView.contentSize.height;
 }
 
 @end

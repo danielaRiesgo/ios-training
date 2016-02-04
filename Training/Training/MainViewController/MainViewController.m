@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIView * notesTableView;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint * productsTableViewHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint * notesTableViewHeight;
 
 @property (strong, nonatomic) ProductsTableViewController * productsTableViewController;
 @property (strong, nonatomic) NotesTableViewController * notesTableViewController;
@@ -31,13 +32,14 @@
     [self addChildViewController:self.productsTableViewController];
     [self.productsTableView addSubview:self.productsTableViewController.view];
     self.productsTableViewController.view.frame = self.productsTableView.bounds;
-
+    self.productsTableViewHeight.constant = self.productsTableViewController.tableViewHeight;
+    
     self.notesTableViewController = [self createNotesTableViewController];
     [self addChildViewController:self.notesTableViewController];
     [self.notesTableView addSubview:self.notesTableViewController.view];
-    
-    self.productsTableViewHeight.constant = self.productsTableViewController.tableViewHeight;
     self.notesTableViewController.view.frame = self.notesTableView.bounds;
+    self.notesTableViewHeight.constant = self.notesTableViewController.tableViewHeight;
+    
 }
 
 - (ProductsTableViewController *)createProductsTableViewController {

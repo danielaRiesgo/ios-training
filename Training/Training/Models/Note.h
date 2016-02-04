@@ -10,6 +10,9 @@
 
 @interface Note : NSObject
 
+- (instancetype)initWithTitle:(NSString *)title
+                       detail:(NSString *)detail;
+
 @property (strong, nonatomic) NSString* title;
 @property (strong, nonatomic) NSString* detail;
 
