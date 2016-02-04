@@ -20,6 +20,7 @@
 		CE4F8D031C60DF6800856DEF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE4F8D021C60DF6800856DEF /* Images.xcassets */; };
 		CE4F8D061C60DF6800856DEF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE4F8D041C60DF6800856DEF /* LaunchScreen.xib */; };
 		CE4F8D121C60DF6800856DEF /* TrainingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4F8D111C60DF6800856DEF /* TrainingTests.m */; };
+		CE8841091C639105007CB0E9 /* StackViewStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE8841081C639105007CB0E9 /* StackViewStoryboard.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		CE4F8D0B1C60DF6800856DEF /* TrainingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrainingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4F8D101C60DF6800856DEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE4F8D111C60DF6800856DEF /* TrainingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrainingTests.m; sourceTree = "<group>"; };
+		CE8841081C639105007CB0E9 /* StackViewStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = StackViewStoryboard.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +142,7 @@
 				CE4F8CF91C60DF6700856DEF /* AppDelegate.h */,
 				CE4F8CFA1C60DF6700856DEF /* AppDelegate.m */,
 				CE4F8CFF1C60DF6800856DEF /* Main.storyboard */,
+				CE8841081C639105007CB0E9 /* StackViewStoryboard.storyboard */,
 				CE4F8D021C60DF6800856DEF /* Images.xcassets */,
 				CE4F8D041C60DF6800856DEF /* LaunchScreen.xib */,
 				CE4F8CF51C60DF6700856DEF /* Supporting Files */,
@@ -256,6 +259,7 @@
 				CE4F8D011C60DF6800856DEF /* Main.storyboard in Resources */,
 				CE4F8D061C60DF6800856DEF /* LaunchScreen.xib in Resources */,
 				CE4F8D031C60DF6800856DEF /* Images.xcassets in Resources */,
+				CE8841091C639105007CB0E9 /* StackViewStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

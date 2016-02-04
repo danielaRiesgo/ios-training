@@ -23,10 +23,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    Product * p1 = [[Product alloc] initWithDetail:@"Detalle" quantity:@5 price:@24];
+    Product * p1 = [[Product alloc] initWithDetail:@"Detalle del primer item de producto con nombre largo, para ver si se hace multilinea" quantity:@5 price:@24];
     Product * p2 = [[Product alloc] initWithDetail:@"Detalle 2" quantity:@7 price:@2];
     Product * p3 = [[Product alloc] initWithDetail:@"Item De testeo - Por favor no ofertar" quantity:@1 price:@125];
     self.products = @[p1, p2, p3];
+    
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = 40;
     
     [self.tableView reloadData];
 }

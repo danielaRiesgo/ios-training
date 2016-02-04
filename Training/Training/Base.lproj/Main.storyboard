@@ -274,14 +274,8 @@
                                                 <rect key="frame" x="8" y="46" width="568" height="64"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="568" id="0oG-se-Mvf"/>
                                                     <constraint firstAttribute="height" constant="64" id="S1k-AD-SuT"/>
                                                 </constraints>
-                                                <variation key="default">
-                                                    <mask key="constraints">
-                                                        <exclude reference="0oG-se-Mvf"/>
-                                                    </mask>
-                                                </variation>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OPB-vb-HWF">
                                                 <rect key="frame" x="8" y="8" width="568" height="38"/>
@@ -318,6 +312,11 @@
                                                     <constraint firstAttribute="height" constant="38" id="oel-Vb-ka5"/>
                                                     <constraint firstAttribute="width" constant="568" id="xQ9-eP-zUR"/>
                                                 </constraints>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="xQ9-eP-zUR"/>
+                                                    </mask>
+                                                </variation>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S2B-hS-YRf">
                                                 <rect key="frame" x="8" y="110" width="568" height="75"/>
@@ -580,10 +579,11 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Item De testeo - Por favor no ofertar" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oFu-yM-34h">
-                                                    <rect key="frame" x="10" y="-1" width="162" height="41"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Item De testeo - Por favor no ofertar" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oFu-yM-34h">
+                                                    <rect key="frame" x="10" y="9" width="277" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="162" id="Qf7-Lw-Aps"/>
+                                                        <constraint firstAttribute="width" constant="420" id="UlW-Oe-QbG"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -591,6 +591,7 @@
                                                     <variation key="default">
                                                         <mask key="constraints">
                                                             <exclude reference="Qf7-Lw-Aps"/>
+                                                            <exclude reference="UlW-Oe-QbG"/>
                                                         </mask>
                                                     </variation>
                                                 </label>
@@ -605,6 +606,7 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="oFu-yM-34h" secondAttribute="bottom" constant="1" id="13i-zT-18B"/>
                                                 <constraint firstItem="NmC-h4-qP6" firstAttribute="centerY" secondItem="d6s-KH-86p" secondAttribute="centerY" id="4Ze-jv-ePc"/>
                                                 <constraint firstItem="nPA-gM-Wa0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="oFu-yM-34h" secondAttribute="trailing" constant="20" id="BCv-Ts-Ehl"/>
                                                 <constraint firstAttribute="trailing" secondItem="NmC-h4-qP6" secondAttribute="trailing" constant="10" id="DUx-Sm-fjj"/>
@@ -616,6 +618,7 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="NmC-h4-qP6" secondAttribute="trailing" constant="10" id="ieR-CF-Lf2"/>
                                                 <constraint firstItem="oFu-yM-34h" firstAttribute="centerY" secondItem="d6s-KH-86p" secondAttribute="centerY" id="oiP-XE-BW0"/>
                                                 <constraint firstItem="oFu-yM-34h" firstAttribute="leading" secondItem="d6s-KH-86p" secondAttribute="leading" constant="10" id="pwz-J7-pyB"/>
+                                                <constraint firstItem="oFu-yM-34h" firstAttribute="top" secondItem="d6s-KH-86p" secondAttribute="topMargin" constant="1" id="ytU-p2-BoR"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
@@ -692,7 +695,7 @@
                                                         <constraint firstAttribute="height" constant="45" id="b7V-tq-wZc"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jPH-Jo-525">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jPH-Jo-525">
                                                     <rect key="frame" x="10" y="11" width="331" height="21"/>
                                                     <string key="text">Loren ipsm lorel, commenset	in abem simet</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
