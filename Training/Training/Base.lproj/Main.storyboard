@@ -119,8 +119,8 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="euT-6C-mCv">
                                                 <rect key="frame" x="0.0" y="0.0" width="195" height="80"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cobrado" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I1y-Hb-XyH">
-                                                        <rect key="frame" x="73" y="59" width="49" height="21"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Facturado" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I1y-Hb-XyH">
+                                                        <rect key="frame" x="69" y="59" width="57" height="21"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="21" id="Tpn-kY-vRD"/>
                                                         </constraints>
@@ -153,8 +153,8 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aND-cb-3Fh">
                                                 <rect key="frame" x="389" y="0.0" width="195" height="80"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Facturado" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xdF-ns-QQN">
-                                                        <rect key="frame" x="70" y="59" width="57" height="21"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cobrado" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xdF-ns-QQN">
+                                                        <rect key="frame" x="74" y="59" width="49" height="21"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="21" id="lom-3e-UMk"/>
                                                         </constraints>
@@ -270,13 +270,6 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aGJ-BD-BA2">
                                         <rect key="frame" x="8" y="115" width="584" height="193"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PoX-4e-dyS">
-                                                <rect key="frame" x="8" y="46" width="568" height="64"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="64" id="S1k-AD-SuT"/>
-                                                </constraints>
-                                            </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OPB-vb-HWF">
                                                 <rect key="frame" x="8" y="8" width="568" height="38"/>
                                                 <subviews>
@@ -373,6 +366,13 @@
                                                     <constraint firstAttribute="trailing" secondItem="FBa-z8-KWM" secondAttribute="trailing" constant="10" id="hAg-x1-gzR"/>
                                                     <constraint firstItem="Kb1-nQ-S5z" firstAttribute="trailing" secondItem="oUS-OW-L8l" secondAttribute="trailing" id="pJt-cy-fdg"/>
                                                     <constraint firstItem="QDf-A5-wrH" firstAttribute="leading" secondItem="aXN-M5-jKc" secondAttribute="leading" id="tj5-bh-VXe"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PoX-4e-dyS">
+                                                <rect key="frame" x="8" y="46" width="568" height="64"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="64" id="S1k-AD-SuT"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
