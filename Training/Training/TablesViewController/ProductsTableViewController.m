@@ -45,7 +45,7 @@
     Product* p = [self.products objectAtIndex:indexPath.row];
     cell.detailLabel.text = p.detail;
     cell.quantityLabel.text = [NSString stringWithFormat:@"%@", p.quantity];
-    cell.priceLabel.text = [NSString stringWithFormat:@"%@", p.price];
+    cell.priceLabel.text = [NSString stringWithFormat:@"$%@", p.price];
     return cell;
 }
 

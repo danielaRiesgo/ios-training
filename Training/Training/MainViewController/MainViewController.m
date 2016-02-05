@@ -39,16 +39,15 @@
     [self.notesTableView addSubview:self.notesTableViewController.view];
     self.notesTableViewController.view.frame = self.notesTableView.bounds;
     self.notesTableViewHeight.constant = self.notesTableViewController.tableViewHeight;
-    
 }
 
 - (ProductsTableViewController *)createProductsTableViewController {
-    UIStoryboard * storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    UIStoryboard * storyboard = [UIStoryboard storyboardWithName:@"StackViewStoryboard" bundle:[NSBundle mainBundle]];
     return [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass(ProductsTableViewController.class)];
 }
 
 - (NotesTableViewController *)createNotesTableViewController {
-    UIStoryboard * storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    UIStoryboard * storyboard = [UIStoryboard storyboardWithName:@"StackViewStoryboard" bundle:[NSBundle mainBundle]];
     return [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass(NotesTableViewController.class)];
 }
 

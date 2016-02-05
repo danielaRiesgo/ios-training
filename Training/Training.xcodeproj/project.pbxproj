@@ -21,6 +21,8 @@
 		CE4F8D061C60DF6800856DEF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE4F8D041C60DF6800856DEF /* LaunchScreen.xib */; };
 		CE4F8D121C60DF6800856DEF /* TrainingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4F8D111C60DF6800856DEF /* TrainingTests.m */; };
 		CE8841091C639105007CB0E9 /* StackViewStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE8841081C639105007CB0E9 /* StackViewStoryboard.storyboard */; };
+		CEE224261C64F40300FD5AFB /* TZStackView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEE224251C64F40300FD5AFB /* TZStackView.framework */; };
+		CEE224271C64F40300FD5AFB /* TZStackView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEE224251C64F40300FD5AFB /* TZStackView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +34,20 @@
 			remoteInfo = Training;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CEE224281C64F40400FD5AFB /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				CEE224271C64F40300FD5AFB /* TZStackView.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		CE0EF1BE1C62326B00BA804B /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = MainViewController/MainViewController.h; sourceTree = "<group>"; };
@@ -60,6 +76,7 @@
 		CE4F8D101C60DF6800856DEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE4F8D111C60DF6800856DEF /* TrainingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrainingTests.m; sourceTree = "<group>"; };
 		CE8841081C639105007CB0E9 /* StackViewStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = StackViewStoryboard.storyboard; sourceTree = "<group>"; };
+		CEE224251C64F40300FD5AFB /* TZStackView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TZStackView.framework; path = ../Carthage/Build/iOS/TZStackView.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEE224261C64F40300FD5AFB /* TZStackView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +136,7 @@
 		CE4F8CE91C60DF6700856DEF = {
 			isa = PBXGroup;
 			children = (
+				CEE224251C64F40300FD5AFB /* TZStackView.framework */,
 				CE4F8CF41C60DF6700856DEF /* Training */,
 				CE4F8D0E1C60DF6800856DEF /* TrainingTests */,
 				CE4F8CF31C60DF6700856DEF /* Products */,
@@ -186,6 +205,7 @@
 				CE4F8CEE1C60DF6700856DEF /* Sources */,
 				CE4F8CEF1C60DF6700856DEF /* Frameworks */,
 				CE4F8CF01C60DF6700856DEF /* Resources */,
+				CEE224281C64F40400FD5AFB /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
