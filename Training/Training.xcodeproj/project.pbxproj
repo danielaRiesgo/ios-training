@@ -21,8 +21,10 @@
 		CE4F8D061C60DF6800856DEF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE4F8D041C60DF6800856DEF /* LaunchScreen.xib */; };
 		CE4F8D121C60DF6800856DEF /* TrainingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4F8D111C60DF6800856DEF /* TrainingTests.m */; };
 		CE8841091C639105007CB0E9 /* StackViewStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE8841081C639105007CB0E9 /* StackViewStoryboard.storyboard */; };
-		CEE224261C64F40300FD5AFB /* TZStackView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEE224251C64F40300FD5AFB /* TZStackView.framework */; };
-		CEE224271C64F40300FD5AFB /* TZStackView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEE224251C64F40300FD5AFB /* TZStackView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CEE224821C65027000FD5AFB /* TZStackView.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEE224811C65027000FD5AFB /* TZStackView.framework.dSYM */; };
+		CEE224841C6502A200FD5AFB /* TZStackView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEE224831C6502A200FD5AFB /* TZStackView.framework */; };
+		CEE224851C6502A200FD5AFB /* TZStackView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEE224831C6502A200FD5AFB /* TZStackView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CEE224891C65048500FD5AFB /* TZStackViewMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE224881C65048500FD5AFB /* TZStackViewMainViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,15 +38,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		CEE224281C64F40400FD5AFB /* Embed Frameworks */ = {
+		CEE224761C64FFE000FD5AFB /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				CEE224271C64F40300FD5AFB /* TZStackView.framework in Embed Frameworks */,
+				CEE224851C6502A200FD5AFB /* TZStackView.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEE224801C65025800FD5AFB /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+				CEE224821C65027000FD5AFB /* TZStackView.framework.dSYM in CopyFiles */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -76,7 +88,10 @@
 		CE4F8D101C60DF6800856DEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE4F8D111C60DF6800856DEF /* TrainingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrainingTests.m; sourceTree = "<group>"; };
 		CE8841081C639105007CB0E9 /* StackViewStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = StackViewStoryboard.storyboard; sourceTree = "<group>"; };
-		CEE224251C64F40300FD5AFB /* TZStackView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TZStackView.framework; path = ../Carthage/Build/iOS/TZStackView.framework; sourceTree = "<group>"; };
+		CEE224811C65027000FD5AFB /* TZStackView.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = TZStackView.framework.dSYM; path = ../Carthage/Build/iOS/TZStackView.framework.dSYM; sourceTree = "<group>"; };
+		CEE224831C6502A200FD5AFB /* TZStackView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TZStackView.framework; path = ../Carthage/Build/iOS/TZStackView.framework; sourceTree = "<group>"; };
+		CEE224871C65048500FD5AFB /* TZStackViewMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TZStackViewMainViewController.h; path = TZStackViewComponents/TZStackViewMainViewController.h; sourceTree = "<group>"; };
+		CEE224881C65048500FD5AFB /* TZStackViewMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TZStackViewMainViewController.m; path = TZStackViewComponents/TZStackViewMainViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEE224261C64F40300FD5AFB /* TZStackView.framework in Frameworks */,
+				CEE224841C6502A200FD5AFB /* TZStackView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,7 +151,8 @@
 		CE4F8CE91C60DF6700856DEF = {
 			isa = PBXGroup;
 			children = (
-				CEE224251C64F40300FD5AFB /* TZStackView.framework */,
+				CEE224831C6502A200FD5AFB /* TZStackView.framework */,
+				CEE224811C65027000FD5AFB /* TZStackView.framework.dSYM */,
 				CE4F8CF41C60DF6700856DEF /* Training */,
 				CE4F8D0E1C60DF6800856DEF /* TrainingTests */,
 				CE4F8CF31C60DF6700856DEF /* Products */,
@@ -155,6 +171,7 @@
 		CE4F8CF41C60DF6700856DEF /* Training */ = {
 			isa = PBXGroup;
 			children = (
+				CEE224861C65043400FD5AFB /* TZStackViewPart */,
 				CE0EF1C81C62353800BA804B /* Models */,
 				CE0EF1C11C6233EB00BA804B /* TablesViewController */,
 				CE0EF1BD1C6231E900BA804B /* MainViewController */,
@@ -195,6 +212,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		CEE224861C65043400FD5AFB /* TZStackViewPart */ = {
+			isa = PBXGroup;
+			children = (
+				CEE224871C65048500FD5AFB /* TZStackViewMainViewController.h */,
+				CEE224881C65048500FD5AFB /* TZStackViewMainViewController.m */,
+			);
+			name = TZStackViewPart;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -205,7 +231,8 @@
 				CE4F8CEE1C60DF6700856DEF /* Sources */,
 				CE4F8CEF1C60DF6700856DEF /* Frameworks */,
 				CE4F8CF01C60DF6700856DEF /* Resources */,
-				CEE224281C64F40400FD5AFB /* Embed Frameworks */,
+				CEE224761C64FFE000FD5AFB /* Embed Frameworks */,
+				CEE224801C65025800FD5AFB /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -304,6 +331,7 @@
 				CE27CD061C62413C00D75742 /* NotesTableViewCell.m in Sources */,
 				CE0EF1CB1C62355C00BA804B /* Product.m in Sources */,
 				CE0EF1C71C62342900BA804B /* NotesTableViewController.m in Sources */,
+				CEE224891C65048500FD5AFB /* TZStackViewMainViewController.m in Sources */,
 				CE27CD031C623DAD00D75742 /* ProductTableViewCell.m in Sources */,
 				CE0EF1C41C62341800BA804B /* ProductsTableViewController.m in Sources */,
 			);
@@ -366,7 +394,9 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -408,8 +438,10 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -429,6 +461,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../**";
 				INFOPLIST_FILE = Training/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -440,6 +474,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../**";
 				INFOPLIST_FILE = Training/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
