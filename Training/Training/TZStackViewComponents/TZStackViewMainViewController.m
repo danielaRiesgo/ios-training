@@ -9,6 +9,9 @@
 #import "TZStackViewMainViewController.h"
 #import <TZStackView/TZStackView.h>
 
+#import "ProductsTableViewController.h"
+#import "NotesTableViewController.h"
+
 @interface TZStackViewMainViewController ()
 
 @end
@@ -48,7 +51,7 @@
     contentView.translatesAutoresizingMaskIntoConstraints = NO;
     
     
-    TZStackView *stackView = [[TZStackView alloc] initWithArrangedSubviews:@[[self createShopView], [self createProductsView], [self createAddressView], [self createPictureView], [self createClientView], [self createNotesView]]];
+    TZStackView *stackView = [[TZStackView alloc] initWithArrangedSubviews:@[[self createShopView], [self createProductsView]]];//, [self createAddressView], [self createPictureView], [self createClientView], [self createNotesView]]];
     
     stackView.axis = UILayoutConstraintAxisVertical;
     stackView.distribution = UIStackViewDistributionEqualSpacing;
@@ -115,14 +118,51 @@
     [mailingImage.leadingAnchor constraintEqualToAnchor:callingImage.trailingAnchor constant:10].active = YES;
     callingImage.translatesAutoresizingMaskIntoConstraints = NO;
     
-    
+    view.translatesAutoresizingMaskIntoConstraints = NO;
     return view;
 }
 
 - (UIView *)createProductsView {
     UIView *view = [[UIView alloc] init];
     view.backgroundColor = [UIColor whiteColor];
-    [view.heightAnchor constraintEqualToConstant:100].active = YES;
+    
+    UIView *titleView = [[UIView alloc] init];
+    titleView.backgroundColor = [UIColor lightGrayColor];
+    [view addSubview:titleView];
+    [titleView.topAnchor constraintEqualToAnchor:view.topAnchor constant:8].active = YES;
+    [titleView.leadingAnchor constraintEqualToAnchor:view.leadingAnchor constant:8].active = YES;
+    [view.trailingAnchor constraintEqualToAnchor:titleView.trailingAnchor constant:8].active = YES;
+    [titleView.heightAnchor constraintEqualToConstant:38].active = YES;
+    titleView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    
+    UIView *productsTableView = [[UIView alloc] init];
+    view.backgroundColor = [UIColor whiteColor];
+    [view addSubview:productsTableView];
+    [productsTableView.topAnchor constraintEqualToAnchor:titleView.bottomAnchor].active = YES;
+    [productsTableView.leadingAnchor constraintEqualToAnchor:view.leadingAnchor constant:8].active = YES;
+    [view.trailingAnchor constraintEqualToAnchor:productsTableView.trailingAnchor constant:8].active = YES;
+    
+    UIStoryboard * storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: [NSBundle mainBundle]];
+    ProductsTableViewController *productsTableViewController = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass(ProductsTableViewController.class)];
+    [self addChildViewController:productsTableViewController];
+    [productsTableView addSubview:productsTableViewController.view];
+    productsTableViewController.view.frame = productsTableView.bounds;
+    [productsTableView.heightAnchor constraintEqualToConstant:productsTableViewController.tableViewHeight].active = YES;
+    productsTableView.translatesAutoresizingMaskIntoConstraints = NO;
+
+    
+    UIView *totalView = [[UIView alloc] init];
+    totalView.backgroundColor = [UIColor whiteColor];
+    [view addSubview:totalView];
+    [totalView.topAnchor constraintEqualToAnchor:productsTableView.bottomAnchor].active = YES;
+    [totalView.leadingAnchor constraintEqualToAnchor:view.leadingAnchor constant:8].active = YES;
+    [view.trailingAnchor constraintEqualToAnchor:totalView.trailingAnchor constant:8].active = YES;
+    [view.bottomAnchor constraintEqualToAnchor:totalView.bottomAnchor constant:8].active = YES;
+    [totalView.heightAnchor constraintEqualToConstant:75].active = YES;
+    totalView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    view.translatesAutoresizingMaskIntoConstraints = NO;
     return view;
 }
 
@@ -150,8 +190,18 @@
 - (UIView *)createNotesView {
     UIView *view = [[UIView alloc] init];
     view.backgroundColor = [UIColor whiteColor];
+    
+    UIStoryboard * storyboard = [UIStoryboard storyboardWithName:@"StackViewStoryboard" bundle:[NSBundle mainBundle]];
+    NotesTableViewController *notesTableViewController = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass(NotesTableViewController.class)];
+    [self addChildViewController:notesTableViewController];
+    
+//    [self.notesTableView addSubview:self.notesTableViewController.view];
+//    self.notesTableViewController.view.frame = self.notesTableView.bounds;
+//    self.notesTableViewHeight.constant = notesTableViewController.tableViewHeight;
+    
     [view.heightAnchor constraintEqualToConstant:100].active = YES;
     return view;
 }
+
 
 @end
