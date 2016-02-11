@@ -9,7 +9,7 @@
 #import "TZStackViewMainViewController.h"
 #import <TZStackView/TZStackView.h>
 
-#import "ProductsTableViewController.h"
+#import "TZStackProductsTableViewController.h"
 #import "NotesTableViewController.h"
 
 @interface TZStackViewMainViewController ()
@@ -142,14 +142,16 @@
     [productsTableView.topAnchor constraintEqualToAnchor:titleView.bottomAnchor].active = YES;
     [productsTableView.leadingAnchor constraintEqualToAnchor:view.leadingAnchor constant:8].active = YES;
     [view.trailingAnchor constraintEqualToAnchor:productsTableView.trailingAnchor constant:8].active = YES;
-    
+    /*
     UIStoryboard * storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: [NSBundle mainBundle]];
     ProductsTableViewController *productsTableViewController = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass(ProductsTableViewController.class)];
+    */
+    TZStackProductsTableViewController *productsTableViewController = [[TZStackProductsTableViewController alloc] init];
     [self addChildViewController:productsTableViewController];
     [productsTableView addSubview:productsTableViewController.view];
     productsTableViewController.view.frame = productsTableView.bounds;
     [productsTableView.heightAnchor constraintEqualToConstant:productsTableViewController.tableViewHeight].active = YES;
-    productsTableView.translatesAutoresizingMaskIntoConstraints = NO;
+     productsTableView.translatesAutoresizingMaskIntoConstraints = NO;
 
     
     UIView *totalView = [[UIView alloc] init];

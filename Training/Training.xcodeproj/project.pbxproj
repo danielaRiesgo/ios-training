@@ -21,6 +21,8 @@
 		CE4F8D061C60DF6800856DEF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE4F8D041C60DF6800856DEF /* LaunchScreen.xib */; };
 		CE4F8D121C60DF6800856DEF /* TrainingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4F8D111C60DF6800856DEF /* TrainingTests.m */; };
 		CE8841091C639105007CB0E9 /* StackViewStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE8841081C639105007CB0E9 /* StackViewStoryboard.storyboard */; };
+		CE9FA5C51C6CC18700E32605 /* TZStackProductsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9FA5C41C6CC18700E32605 /* TZStackProductsTableViewController.m */; };
+		CE9FA5C81C6CC31A00E32605 /* TZStackProductTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9FA5C71C6CC31A00E32605 /* TZStackProductTableViewCell.m */; };
 		CEE224821C65027000FD5AFB /* TZStackView.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEE224811C65027000FD5AFB /* TZStackView.framework.dSYM */; };
 		CEE224841C6502A200FD5AFB /* TZStackView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEE224831C6502A200FD5AFB /* TZStackView.framework */; };
 		CEE224851C6502A200FD5AFB /* TZStackView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEE224831C6502A200FD5AFB /* TZStackView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -88,6 +90,10 @@
 		CE4F8D101C60DF6800856DEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE4F8D111C60DF6800856DEF /* TrainingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrainingTests.m; sourceTree = "<group>"; };
 		CE8841081C639105007CB0E9 /* StackViewStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = StackViewStoryboard.storyboard; sourceTree = "<group>"; };
+		CE9FA5C31C6CC18700E32605 /* TZStackProductsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TZStackProductsTableViewController.h; path = TZStackViewComponents/TZStackProductsTableViewController.h; sourceTree = "<group>"; };
+		CE9FA5C41C6CC18700E32605 /* TZStackProductsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TZStackProductsTableViewController.m; path = TZStackViewComponents/TZStackProductsTableViewController.m; sourceTree = "<group>"; };
+		CE9FA5C61C6CC31A00E32605 /* TZStackProductTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TZStackProductTableViewCell.h; path = TZStackViewComponents/TZStackProductTableViewCell.h; sourceTree = "<group>"; };
+		CE9FA5C71C6CC31A00E32605 /* TZStackProductTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TZStackProductTableViewCell.m; path = TZStackViewComponents/TZStackProductTableViewCell.m; sourceTree = "<group>"; };
 		CEE224811C65027000FD5AFB /* TZStackView.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = TZStackView.framework.dSYM; path = ../Carthage/Build/iOS/TZStackView.framework.dSYM; sourceTree = "<group>"; };
 		CEE224831C6502A200FD5AFB /* TZStackView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TZStackView.framework; path = ../Carthage/Build/iOS/TZStackView.framework; sourceTree = "<group>"; };
 		CEE224871C65048500FD5AFB /* TZStackViewMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TZStackViewMainViewController.h; path = TZStackViewComponents/TZStackViewMainViewController.h; sourceTree = "<group>"; };
@@ -217,6 +223,10 @@
 			children = (
 				CEE224871C65048500FD5AFB /* TZStackViewMainViewController.h */,
 				CEE224881C65048500FD5AFB /* TZStackViewMainViewController.m */,
+				CE9FA5C31C6CC18700E32605 /* TZStackProductsTableViewController.h */,
+				CE9FA5C41C6CC18700E32605 /* TZStackProductsTableViewController.m */,
+				CE9FA5C61C6CC31A00E32605 /* TZStackProductTableViewCell.h */,
+				CE9FA5C71C6CC31A00E32605 /* TZStackProductTableViewCell.m */,
 			);
 			name = TZStackViewPart;
 			sourceTree = "<group>";
@@ -324,9 +334,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE9FA5C51C6CC18700E32605 /* TZStackProductsTableViewController.m in Sources */,
 				CE27CD091C62420B00D75742 /* Note.m in Sources */,
 				CE4F8CFB1C60DF6700856DEF /* AppDelegate.m in Sources */,
 				CE0EF1C01C62326B00BA804B /* MainViewController.m in Sources */,
+				CE9FA5C81C6CC31A00E32605 /* TZStackProductTableViewCell.m in Sources */,
 				CE4F8CF81C60DF6700856DEF /* main.m in Sources */,
 				CE27CD061C62413C00D75742 /* NotesTableViewCell.m in Sources */,
 				CE0EF1CB1C62355C00BA804B /* Product.m in Sources */,
