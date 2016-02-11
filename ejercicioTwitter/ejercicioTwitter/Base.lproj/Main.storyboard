@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1605" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Feed View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="FeedViewController" customModule="ejercicioTwitter" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vMm-yA-JTE">
+                                <rect key="frame" x="88" y="20" width="492" height="580"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ELL-ef-OXx">
+                                <rect key="frame" x="20" y="20" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="2pY-cN-GcE"/>
+                                    <constraint firstAttribute="width" secondItem="ELL-ef-OXx" secondAttribute="height" multiplier="1:1" id="Bxc-gN-XNg"/>
+                                    <constraint firstAttribute="height" constant="100" id="ouZ-Rz-E39"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="ouZ-Rz-E39"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M8F-mb-A19">
+                                <rect key="frame" x="29" y="88" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="vMm-yA-JTE" secondAttribute="trailing" id="2Aq-vQ-GYl"/>
+                            <constraint firstItem="ELL-ef-OXx" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="BbK-Kk-yOG"/>
+                            <constraint firstItem="vMm-yA-JTE" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="Cdy-KT-88O"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="vMm-yA-JTE" secondAttribute="bottom" id="Kad-B0-ju2"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="vMm-yA-JTE" secondAttribute="bottom" id="Pxb-uX-flr"/>
+                            <constraint firstItem="M8F-mb-A19" firstAttribute="top" secondItem="ELL-ef-OXx" secondAttribute="bottom" constant="8" id="QRi-D2-fkb"/>
+                            <constraint firstItem="vMm-yA-JTE" firstAttribute="leading" secondItem="ELL-ef-OXx" secondAttribute="trailing" constant="8" id="Vdb-Ys-vjG"/>
+                            <constraint firstItem="vMm-yA-JTE" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Xhc-xp-lFH"/>
+                            <constraint firstItem="ELL-ef-OXx" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="ZZc-CA-6OG"/>
+                            <constraint firstItem="ELL-ef-OXx" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="c2s-vH-nVW"/>
+                            <constraint firstItem="M8F-mb-A19" firstAttribute="centerX" secondItem="ELL-ef-OXx" secondAttribute="centerX" id="gdL-63-FJP"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="ZZc-CA-6OG"/>
+                                <exclude reference="Cdy-KT-88O"/>
+                                <exclude reference="Pxb-uX-flr"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="305" y="418"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="ikS-3Y-Fz1">
+            <objects>
+                <viewController id="31z-kA-7MQ" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="tGC-0l-UJM"/>
+                        <viewControllerLayoutGuide type="bottom" id="gt0-Kh-zGQ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="VHv-fd-xaP">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aOb-ma-BXD">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aOb-ma-BXD" firstAttribute="top" secondItem="VHv-fd-xaP" secondAttribute="top" id="9LL-Ha-M2G"/>
+                            <constraint firstAttribute="trailing" secondItem="aOb-ma-BXD" secondAttribute="trailing" id="CiQ-cQ-d4K"/>
+                            <constraint firstItem="gt0-Kh-zGQ" firstAttribute="top" secondItem="aOb-ma-BXD" secondAttribute="bottom" id="JhK-uU-aqh"/>
+                            <constraint firstItem="aOb-ma-BXD" firstAttribute="leading" secondItem="VHv-fd-xaP" secondAttribute="leading" id="Xx4-7i-hMn"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RwW-59-RD6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="989" y="418"/>
+        </scene>
+    </scenes>
+</document>
