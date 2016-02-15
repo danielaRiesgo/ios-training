@@ -34,9 +34,13 @@ class FeedViewController: UITableViewController {
                                 print("Data acquired!")
                                 do {
                                     let jsonArray : NSArray = try NSJSONSerialization.JSONObjectWithData(data, options:[]) as! NSArray
+                                    var formatter = NSDateFormatter()
+                                    formatter.dateStyle = .MediumStyle
+                                    formatter.timeStyle = .MediumStyle
+                                    print("Ahora es: ", formatter.stringFromDate(NSDate()))
                                     for jsonTweet in jsonArray {
                                         self.tweets.append(Tweet(jsonDict: jsonTweet as! NSDictionary, tableView: self.tableView))
-                                        print(jsonTweet["text"])
+                                        print("Tweet: ", jsonTweet["text"])
                                     }
                                 }
                                 catch {
