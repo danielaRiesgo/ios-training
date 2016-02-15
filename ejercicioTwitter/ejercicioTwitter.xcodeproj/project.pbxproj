@@ -21,6 +21,9 @@
 		CE9FA6111C6D04E100E32605 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9FA6101C6D04E100E32605 /* ReactiveCocoa.framework */; };
 		CE9FA6121C6D04E100E32605 /* ReactiveCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE9FA6101C6D04E100E32605 /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CE9FA6161C6D064500E32605 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9FA6151C6D064500E32605 /* FeedViewController.swift */; };
+		CEA6C0BA1C7214B700CB5DC5 /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA6C0B91C7214B700CB5DC5 /* Tweet.swift */; };
+		CEA6C0BC1C7214E600CB5DC5 /* TweetTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA6C0BB1C7214E600CB5DC5 /* TweetTableCell.swift */; };
+		CEA6C0BE1C721FB900CB5DC5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA6C0BD1C721FB900CB5DC5 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +77,9 @@
 		CE9FA60D1C6D04DB00E32605 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		CE9FA6101C6D04E100E32605 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
 		CE9FA6151C6D064500E32605 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		CEA6C0B91C7214B700CB5DC5 /* Tweet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
+		CEA6C0BB1C7214E600CB5DC5 /* TweetTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetTableCell.swift; sourceTree = "<group>"; };
+		CEA6C0BD1C721FB900CB5DC5 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D8F71249AA65CA756E0FF5B2 /* Pods_ejercicioTwitter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ejercicioTwitter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF751BF3345465DC6D4C625F /* Pods-ejercicioTwitter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ejercicioTwitter.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ejercicioTwitter/Pods-ejercicioTwitter.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -158,6 +164,9 @@
 				CE9FA5DE1C6CF80000E32605 /* LaunchScreen.storyboard */,
 				CE9FA5E11C6CF80000E32605 /* Info.plist */,
 				CE9FA6151C6D064500E32605 /* FeedViewController.swift */,
+				CEA6C0B91C7214B700CB5DC5 /* Tweet.swift */,
+				CEA6C0BB1C7214E600CB5DC5 /* TweetTableCell.swift */,
+				CEA6C0BD1C721FB900CB5DC5 /* User.swift */,
 			);
 			path = ejercicioTwitter;
 			sourceTree = "<group>";
@@ -363,7 +372,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEA6C0BC1C7214E600CB5DC5 /* TweetTableCell.swift in Sources */,
+				CEA6C0BA1C7214B700CB5DC5 /* Tweet.swift in Sources */,
 				CE9FA6161C6D064500E32605 /* FeedViewController.swift in Sources */,
+				CEA6C0BE1C721FB900CB5DC5 /* User.swift in Sources */,
 				CE9FA5D61C6CF80000E32605 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
