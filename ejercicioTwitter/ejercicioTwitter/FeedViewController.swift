@@ -18,15 +18,16 @@ class FeedViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.estimatedRowHeight = 160.0
+        //self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 500.0 //160.0
+        
         let accountType = accountStore.accountTypeWithAccountTypeIdentifier(ACAccountTypeIdentifierTwitter)
         accountStore.requestAccessToAccountsWithType(accountType, options: nil){ (granted, error) in
             if (error == nil) {
                 let accounts = self.accountStore.accountsWithAccountType(accountType)
                 if accounts != nil {
                     if case let twitterAccount as ACAccount = accounts.first {
-                        let requestURL = NSURL(string:"https://api.twitter.com/1.1/statuses/home_timeline.json?count=20")
+                        let requestURL = NSURL(string:"https://api.twitter.com/1.1/statuses/home_timeline.json?count=5")
                         let request = SLRequest(forServiceType: SLServiceTypeTwitter, requestMethod: .GET, URL: requestURL, parameters: nil)
                         request.account = twitterAccount
                         request.performRequestWithHandler( { (data: NSData!, urlResponse: NSHTTPURLResponse!, error: NSError!) in
@@ -34,6 +35,7 @@ class FeedViewController: UITableViewController {
                                 //print("Data acquired!")
                                 do {
                                     let jsonArray : NSArray = try NSJSONSerialization.JSONObjectWithData(data, options:[]) as! NSArray
+                                    //print(jsonArray)
                                     /*
                                     let formatter = NSDateFormatter()
                                     formatter.dateStyle = .MediumStyle
@@ -71,6 +73,10 @@ class FeedViewController: UITableViewController {
         
     }
     
+    override func viewDidAppear(animated: Bool) {
+        self.tableView.reloadData()
+    }
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tweets.count
     }
@@ -78,10 +84,14 @@ class FeedViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let tweet = self.tweets[indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier("TweetTableCell") as! TweetTableCell
-        cell.tweetTextLabel.text = tweet.text
+        cell.tweetTextView.attributedText = tweet.text
         cell.userNameLabel.text = tweet.user.name
         cell.userImage.image = tweet.user.profileImage
         cell.timeAgoLabel.text = tweet.getTimeAgo()
+        
+        cell.tweetTextView.sizeToFit()
+        cell.tweetTextView.layoutIfNeeded()
+        
         return cell
     }
 
