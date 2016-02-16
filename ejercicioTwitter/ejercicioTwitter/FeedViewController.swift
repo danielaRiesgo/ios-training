@@ -27,7 +27,7 @@ class FeedViewController: UITableViewController {
                 let accounts = self.accountStore.accountsWithAccountType(accountType)
                 if accounts != nil {
                     if case let twitterAccount as ACAccount = accounts.first {
-                        let requestURL = NSURL(string:"https://api.twitter.com/1.1/statuses/home_timeline.json?count=5")
+                        let requestURL = NSURL(string:"https://api.twitter.com/1.1/statuses/home_timeline.json?count=20")
                         let request = SLRequest(forServiceType: SLServiceTypeTwitter, requestMethod: .GET, URL: requestURL, parameters: nil)
                         request.account = twitterAccount
                         request.performRequestWithHandler( { (data: NSData!, urlResponse: NSHTTPURLResponse!, error: NSError!) in
