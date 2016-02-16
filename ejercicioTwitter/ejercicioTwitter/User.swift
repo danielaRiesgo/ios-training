@@ -8,35 +8,22 @@
 
 import UIKit
 
-class User {
+struct User {
     
-    var name: String
-    var profileImage: UIImage!
-    var tableView: UITableView
+    let name: String
+    let profileImageURL: NSURL
     
-    init(jsonDict: NSDictionary, tableView: UITableView) {
-        self.tableView = tableView
-        self.name = jsonDict["name"] as! String
-        self.profileImage = UIImage(named: "noPicture")!
-        downloadImage(NSURL(string: jsonDict["profile_image_url_https"] as! String)!)
+    init(name: String, profileImageURL: NSURL) {
+        self.name = name
+        self.profileImageURL = profileImageURL
     }
 
-    func downloadImage(url: NSURL){
-        //print("Download Started: lastPathComponent: " + (url.lastPathComponent ?? ""))
-        getDataFromUrl(url) { (data, response, error)  in
-            dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                guard let data = data where error == nil else { return }
-                //print("Download Finished: ", response?.suggestedFilename ?? "")
-                self.profileImage = UIImage(data: data)
-                self.tableView.reloadData()
-            }
+    func downloadProfileImage(URLSession: NSURLSession = NSURLSession.sharedSession(), completion: (NSData?, NSError?) -> ()) -> NSURLSessionDataTask {
+        let task = URLSession.dataTaskWithRequest(NSURLRequest(URL: profileImageURL)) { data, _, error in
+            completion(data, error)
         }
-    }
-    
-    func getDataFromUrl(url:NSURL, completion: ((data: NSData?, response: NSURLResponse?, error: NSError? ) -> Void)) {
-        NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
-            completion(data: data, response: response, error: error)
-        }.resume()
+        task.resume()
+        return task
     }
 
 }

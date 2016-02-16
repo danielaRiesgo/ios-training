@@ -8,11 +8,17 @@
 
 import UIKit
 
-class TweetTableCell: UITableViewCell {
+final class TweetTableCell: UITableViewCell {
     
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var timeAgoLabel: UILabel!
     @IBOutlet weak var tweetTextView: UITextView!
+    
+    var onPrepareForReuse: TweetTableCell -> () = { _ in }
+    
+    override func prepareForReuse() {
+        onPrepareForReuse(self)
+    }
     
 }

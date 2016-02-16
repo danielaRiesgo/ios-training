@@ -11,87 +11,36 @@ import Accounts
 import Social
 import Foundation
 
+
+
 class FeedViewController: UITableViewController {
     
-    let accountStore = ACAccountStore();
-    var tweets: [Tweet] = []
+    let viewModel = ViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.estimatedRowHeight = 500.0 //160.0
-        
-        let accountType = accountStore.accountTypeWithAccountTypeIdentifier(ACAccountTypeIdentifierTwitter)
-        accountStore.requestAccessToAccountsWithType(accountType, options: nil){ (granted, error) in
-            if (error == nil) {
-                let accounts = self.accountStore.accountsWithAccountType(accountType)
-                if accounts != nil {
-                    if case let twitterAccount as ACAccount = accounts.first {
-                        let requestURL = NSURL(string:"https://api.twitter.com/1.1/statuses/home_timeline.json?count=20")
-                        let request = SLRequest(forServiceType: SLServiceTypeTwitter, requestMethod: .GET, URL: requestURL, parameters: nil)
-                        request.account = twitterAccount
-                        request.performRequestWithHandler( { (data: NSData!, urlResponse: NSHTTPURLResponse!, error: NSError!) in
-                            if (error == nil) {
-                                //print("Data acquired!")
-                                do {
-                                    let jsonArray : NSArray = try NSJSONSerialization.JSONObjectWithData(data, options:[]) as! NSArray
-                                    //print(jsonArray)
-                                    /*
-                                    let formatter = NSDateFormatter()
-                                    formatter.dateStyle = .MediumStyle
-                                    formatter.timeStyle = .MediumStyle
-                                    print("Ahora es: ", formatter.stringFromDate(NSDate()))
-                                    */
-                                    for jsonTweet in jsonArray {
-                                        self.tweets.append(Tweet(jsonDict: jsonTweet as! NSDictionary, tableView: self.tableView))
-                                        //print("JsonTweet: ", jsonTweet)
-                                        //print("Tweet: ", jsonTweet["text"])
-                                    }
-                                }
-                                catch {
-                                    print("Error: \(error)")
-                                }
-                                
-                                dispatch_async(dispatch_get_main_queue(), {
-                                    print("In MAIN THREAD")
-                                    self.tableView.reloadData()
-                                })
-                            } else {
-                                print("Error performing request: \(error)")
-                            }
-                        })
-                    } else {
-                            print("No Twitter account available")
-                    }
-                } else {
-                    print("No Twitter account available")
-                }
-            } else {
-                print("Error getting access: \(error)")
-            }
-        }
-        
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        self.tableView.reloadData()
+        self.viewModel.searchForTweets(20) { _ in self.tableView.reloadData() }
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tweets.count
+        return viewModel.tweetsCount
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let tweet = self.tweets[indexPath.row]
+        
         let cell = tableView.dequeueReusableCellWithIdentifier("TweetTableCell") as! TweetTableCell
+        let tweet = self.viewModel.getTweet(indexPath.row)//[indexPath.row]
         cell.tweetTextView.attributedText = tweet.text
         cell.userNameLabel.text = tweet.user.name
-        cell.userImage.image = tweet.user.profileImage
-        cell.timeAgoLabel.text = tweet.getTimeAgo()
-        
-        cell.tweetTextView.sizeToFit()
-        cell.tweetTextView.layoutIfNeeded()
-        
+        cell.timeAgoLabel.text = tweet.timeAgo
+        let task = tweet.user.downloadProfileImage { data, error in
+            if error == nil {
+                dispatch_async(dispatch_get_main_queue()) { cell.userImage.image = UIImage(data: data!)! }
+            } else {
+                print("Error fetching image \(error)")
+            }
+        }
+        cell.onPrepareForReuse = { _ in task.cancel() }
         return cell
     }
 
