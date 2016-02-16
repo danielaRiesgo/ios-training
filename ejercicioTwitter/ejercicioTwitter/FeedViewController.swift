@@ -31,16 +31,19 @@ class FeedViewController: UITableViewController {
                         request.account = twitterAccount
                         request.performRequestWithHandler( { (data: NSData!, urlResponse: NSHTTPURLResponse!, error: NSError!) in
                             if (error == nil) {
-                                print("Data acquired!")
+                                //print("Data acquired!")
                                 do {
                                     let jsonArray : NSArray = try NSJSONSerialization.JSONObjectWithData(data, options:[]) as! NSArray
-                                    var formatter = NSDateFormatter()
+                                    /*
+                                    let formatter = NSDateFormatter()
                                     formatter.dateStyle = .MediumStyle
                                     formatter.timeStyle = .MediumStyle
                                     print("Ahora es: ", formatter.stringFromDate(NSDate()))
+                                    */
                                     for jsonTweet in jsonArray {
                                         self.tweets.append(Tweet(jsonDict: jsonTweet as! NSDictionary, tableView: self.tableView))
-                                        print("Tweet: ", jsonTweet["text"])
+                                        //print("JsonTweet: ", jsonTweet)
+                                        //print("Tweet: ", jsonTweet["text"])
                                     }
                                 }
                                 catch {

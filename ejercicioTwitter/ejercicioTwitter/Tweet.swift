@@ -18,12 +18,9 @@ class Tweet {
     
     init(jsonDict: NSDictionary, tableView: UITableView) {
         self.tableView = tableView
-        var date = jsonDict["created_at"] as! String
-        print("Date como vino: ", date)
-        date.removeRange(date.startIndex..<date.startIndex.advancedBy(4))
-        date.removeRange(date.endIndex.advancedBy(-10)..<date.endIndex.advancedBy(-4))
-        print("Date modificado: ", date)
-        self.createdAt = NSDate(string: date, formatString: "MMM dd HH:mm:SS YYYY")
+        let date = jsonDict["created_at"] as! String
+        //print("Date recibido: ", date)
+        self.createdAt = NSDate(string: date, formatString: "EEE MMM dd HH:mm:ssZ yyyy")
         self.text = jsonDict["text"] as! String
         self.user = User(jsonDict: jsonDict["user"] as! NSDictionary, tableView: tableView)
     }
