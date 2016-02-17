@@ -15,7 +15,7 @@ import Foundation
 
 class FeedViewController: UITableViewController {
     
-    let viewModel = Feeder()
+    let viewModel = FeedViewModel(twitterService: TwitterService(accountService: AccountService()), imageFetcher: ImageFetcher())
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +33,7 @@ class FeedViewController: UITableViewController {
         cell.tweetTextView.attributedText = tweet.text
         cell.userNameLabel.text = tweet.userName
         cell.timeAgoLabel.text = tweet.timeAgo
+        cell.userImage.image = UIImage(named: "noPicture")
         let task = tweet.downloadProfileImage { data, error in
             if error == nil {
                 dispatch_async(dispatch_get_main_queue()) { cell.userImage.image = UIImage(data: data!)! }

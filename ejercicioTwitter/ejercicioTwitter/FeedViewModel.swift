@@ -1,13 +1,13 @@
 //
-//  Feeder.swift
+//  FeedViewModel.swift
 //  ejercicioTwitter
 //
 //  Created by Daniela Riesgo on 2/16/16.
 //  Copyright © 2016 Daniela Riesgo. All rights reserved.
 //
 
-import Accounts
-import Social
+import Foundation
+import UIKit
 
 typealias JSON = [String : AnyObject]
 
@@ -55,23 +55,39 @@ func parseTweet(tweetJSON: JSON) -> Tweet {
 
 
 
-class Feeder {
+class FeedViewModel {
 
-    let twitterService = TwitterService();
-    var tweets: [Tweet] = []
+    private let twitterService : TwitterServiceType
+    private let imageFetcher: ImageFetcherType
+    private var tweets: [Tweet] = []
     
     var tweetsCount : Int {
         return tweets.count
     }
     
-    func searchForTweets(quantity: Int, completion: () -> ()) {
-        twitterService.searchForTweets(quantity, dataCompletion: { jsonData in self.tweets = jsonData.map(parseTweet) }, completion: completion)
-        
+    init(twitterService: TwitterServiceType, imageFetcher: ImageFetcherType) {
+        self.twitterService = twitterService
+        self.imageFetcher = imageFetcher
     }
+    
+    func searchForTweets(quantity: Int, completion: () -> ()) {
+        twitterService.getHomeTimeline(quantity) { result in
+            switch result {
+                case let .Failure(error):
+                    print("Error: \(error)")
+                case let .Success(jsonData):
+                    self.tweets = jsonData.map(parseTweet)
+                    dispatch_async(dispatch_get_main_queue(), {
+                        completion()
+                    })
+            }
+        }
+    }
+    
     
     subscript(index: Int) -> TweetViewModel {
         let tweet = self.tweets[index]
-        return TweetViewModel(text: tweet.text, timeAgo: tweet.timeAgo, userName: tweet.user.name, userImageURL: tweet.user.profileImageURL)
+        return TweetViewModel(text: tweet.text, timeAgo: tweet.timeAgo, userName: tweet.user.name, userImageURL: tweet.user.profileImageURL, imageFetcher: self.imageFetcher)
     }
     
 }
