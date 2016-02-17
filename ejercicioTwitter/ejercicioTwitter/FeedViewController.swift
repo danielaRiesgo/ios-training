@@ -15,7 +15,7 @@ import Foundation
 
 class FeedViewController: UITableViewController {
     
-    let viewModel = ViewModel()
+    let viewModel = Feeder()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,11 +29,11 @@ class FeedViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("TweetTableCell") as! TweetTableCell
-        let tweet = self.viewModel.getTweet(indexPath.row)//[indexPath.row]
+        let tweet = self.viewModel[indexPath.row]
         cell.tweetTextView.attributedText = tweet.text
-        cell.userNameLabel.text = tweet.user.name
+        cell.userNameLabel.text = tweet.userName
         cell.timeAgoLabel.text = tweet.timeAgo
-        let task = tweet.user.downloadProfileImage { data, error in
+        let task = tweet.downloadProfileImage { data, error in
             if error == nil {
                 dispatch_async(dispatch_get_main_queue()) { cell.userImage.image = UIImage(data: data!)! }
             } else {

@@ -1,5 +1,5 @@
 //
-//  ViewModel.swift
+//  Feeder.swift
 //  ejercicioTwitter
 //
 //  Created by Daniela Riesgo on 2/16/16.
@@ -55,9 +55,9 @@ func parseTweet(tweetJSON: JSON) -> Tweet {
 
 
 
-class ViewModel {
+class Feeder {
 
-    let accountStore = ACAccountStore();
+    let twitterService = TwitterService();
     var tweets: [Tweet] = []
     
     var tweetsCount : Int {
@@ -65,50 +65,13 @@ class ViewModel {
     }
     
     func searchForTweets(quantity: Int, completion: () -> ()) {
-        
-        let accountType = accountStore.accountTypeWithAccountTypeIdentifier(ACAccountTypeIdentifierTwitter)
-        accountStore.requestAccessToAccountsWithType(accountType, options: nil){ (granted, error) in
-            if (error == nil) {
-                let accounts = self.accountStore.accountsWithAccountType(accountType)
-                if accounts != nil {
-                    if case let twitterAccount as ACAccount = accounts.first {
-                        let requestURL = NSURL(string:"https://api.twitter.com/1.1/statuses/home_timeline.json?")
-                        let request = SLRequest(forServiceType: SLServiceTypeTwitter, requestMethod: .GET, URL: requestURL, parameters: ["count" : quantity])
-                        request.account = twitterAccount
-                        request.performRequestWithHandler( { (data: NSData!, urlResponse: NSHTTPURLResponse!, error: NSError!) in
-                            if (error == nil) {
-                                print("Data acquired!")
-                                do {
-                                    let jsonArray = try NSJSONSerialization.JSONObjectWithData(data, options:[]) as! [JSON]
-                                    self.tweets = jsonArray.map(parseTweet)
-                                }
-                                catch {
-                                    print("Error: \(error)")
-                                }
-                                
-                                dispatch_async(dispatch_get_main_queue(), {
-                                    print("In MAIN THREAD")
-                                    completion()
-                                })
-                            } else {
-                                print("Error performing request: \(error)")
-                            }
-                        })
-                    } else {
-                        print("No Twitter account available")
-                    }
-                } else {
-                    print("No Twitter account available")
-                }
-            } else {
-                print("Error getting access: \(error)")
-            }
-        }
+        twitterService.searchForTweets(quantity, dataCompletion: { jsonData in self.tweets = jsonData.map(parseTweet) }, completion: completion)
         
     }
     
-    func getTweet(index: Int) -> Tweet {
-        return self.tweets[index]
+    subscript(index: Int) -> TweetViewModel {
+        let tweet = self.tweets[index]
+        return TweetViewModel(text: tweet.text, timeAgo: tweet.timeAgo, userName: tweet.user.name, userImageURL: tweet.user.profileImageURL)
     }
     
 }

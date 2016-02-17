@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		635626CBF1426CCE03ACA561 /* Pods_ejercicioTwitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F71249AA65CA756E0FF5B2 /* Pods_ejercicioTwitter.framework */; };
-		CE8EF5B31C7397CD00C8E4EA /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8EF5B21C7397CD00C8E4EA /* ViewModel.swift */; };
+		CE7FE32C1C749A1B00ACDFBF /* TweetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7FE32B1C749A1B00ACDFBF /* TweetViewModel.swift */; };
+		CE7FE32E1C749C1600ACDFBF /* TwitterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7FE32D1C749C1600ACDFBF /* TwitterService.swift */; };
+		CE8EF5B31C7397CD00C8E4EA /* Feeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8EF5B21C7397CD00C8E4EA /* Feeder.swift */; };
 		CE9FA5D61C6CF80000E32605 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9FA5D51C6CF80000E32605 /* AppDelegate.swift */; };
 		CE9FA5DB1C6CF80000E32605 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE9FA5D91C6CF80000E32605 /* Main.storyboard */; };
 		CE9FA5DD1C6CF80000E32605 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9FA5DC1C6CF80000E32605 /* Assets.xcassets */; };
@@ -62,7 +64,9 @@
 
 /* Begin PBXFileReference section */
 		CE1AA3A9EC7A003937F4E6AA /* Pods-ejercicioTwitter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ejercicioTwitter.release.xcconfig"; path = "Pods/Target Support Files/Pods-ejercicioTwitter/Pods-ejercicioTwitter.release.xcconfig"; sourceTree = "<group>"; };
-		CE8EF5B21C7397CD00C8E4EA /* ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		CE7FE32B1C749A1B00ACDFBF /* TweetViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetViewModel.swift; sourceTree = "<group>"; };
+		CE7FE32D1C749C1600ACDFBF /* TwitterService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterService.swift; sourceTree = "<group>"; };
+		CE8EF5B21C7397CD00C8E4EA /* Feeder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Feeder.swift; sourceTree = "<group>"; };
 		CE9FA5D21C6CF80000E32605 /* ejercicioTwitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ejercicioTwitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE9FA5D51C6CF80000E32605 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE9FA5DA1C6CF80000E32605 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -169,7 +173,9 @@
 				CEA6C0B91C7214B700CB5DC5 /* Tweet.swift */,
 				CEA6C0BB1C7214E600CB5DC5 /* TweetTableCell.swift */,
 				CEA6C0BD1C721FB900CB5DC5 /* User.swift */,
-				CE8EF5B21C7397CD00C8E4EA /* ViewModel.swift */,
+				CE8EF5B21C7397CD00C8E4EA /* Feeder.swift */,
+				CE7FE32B1C749A1B00ACDFBF /* TweetViewModel.swift */,
+				CE7FE32D1C749C1600ACDFBF /* TwitterService.swift */,
 			);
 			path = ejercicioTwitter;
 			sourceTree = "<group>";
@@ -376,10 +382,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEA6C0BC1C7214E600CB5DC5 /* TweetTableCell.swift in Sources */,
+				CE7FE32C1C749A1B00ACDFBF /* TweetViewModel.swift in Sources */,
 				CEA6C0BA1C7214B700CB5DC5 /* Tweet.swift in Sources */,
+				CE7FE32E1C749C1600ACDFBF /* TwitterService.swift in Sources */,
 				CE9FA6161C6D064500E32605 /* FeedViewController.swift in Sources */,
 				CEA6C0BE1C721FB900CB5DC5 /* User.swift in Sources */,
-				CE8EF5B31C7397CD00C8E4EA /* ViewModel.swift in Sources */,
+				CE8EF5B31C7397CD00C8E4EA /* Feeder.swift in Sources */,
 				CE9FA5D61C6CF80000E32605 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
