@@ -40,7 +40,7 @@ class FeedViewController: UITableViewController {
                 print("Error fetching image \(error)")
             }
         }
-        cell.onPrepareForReuse = { _ in task.cancel() }
+        cell.onPrepareForReuse = { _ in task.cancel() } // ¿Debería atrapar la excepción asi no aparece?
         return cell
     }
 
