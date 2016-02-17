@@ -36,7 +36,7 @@ class TwitterService {
                                 }
                                 
                                 dispatch_async(dispatch_get_main_queue(), {
-                                    print("In MAIN THREAD")
+                                    //print("In MAIN THREAD")
                                     completion()
                                 })
                             } else {
