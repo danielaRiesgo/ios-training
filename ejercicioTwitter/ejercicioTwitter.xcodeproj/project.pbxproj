@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		635626CBF1426CCE03ACA561 /* Pods_ejercicioTwitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F71249AA65CA756E0FF5B2 /* Pods_ejercicioTwitter.framework */; };
+		CE5DC4E81C76604700A35051 /* TweetEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5DC4E71C76604700A35051 /* TweetEntity.swift */; };
 		CE841F0C1C761506000B80CC /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE841F0A1C761506000B80CC /* FeedViewController.swift */; };
 		CE841F0D1C761506000B80CC /* TweetTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE841F0B1C761506000B80CC /* TweetTableCell.swift */; };
 		CE841F131C76151A000B80CC /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE841F0E1C76151A000B80CC /* AccountService.swift */; };
@@ -66,6 +67,7 @@
 
 /* Begin PBXFileReference section */
 		CE1AA3A9EC7A003937F4E6AA /* Pods-ejercicioTwitter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ejercicioTwitter.release.xcconfig"; path = "Pods/Target Support Files/Pods-ejercicioTwitter/Pods-ejercicioTwitter.release.xcconfig"; sourceTree = "<group>"; };
+		CE5DC4E71C76604700A35051 /* TweetEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetEntity.swift; sourceTree = "<group>"; };
 		CE841F0A1C761506000B80CC /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FeedViewController.swift; path = View/FeedViewController.swift; sourceTree = "<group>"; };
 		CE841F0B1C761506000B80CC /* TweetTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TweetTableCell.swift; path = View/TweetTableCell.swift; sourceTree = "<group>"; };
 		CE841F0E1C76151A000B80CC /* AccountService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountService.swift; path = ViewModels/AccountService.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 			children = (
 				CE841F181C761532000B80CC /* Tweet.swift */,
 				CE841F191C761532000B80CC /* User.swift */,
+				CE5DC4E71C76604700A35051 /* TweetEntity.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -427,6 +430,7 @@
 			files = (
 				CE841F0D1C761506000B80CC /* TweetTableCell.swift in Sources */,
 				CE841F171C76151A000B80CC /* TwitterService.swift in Sources */,
+				CE5DC4E81C76604700A35051 /* TweetEntity.swift in Sources */,
 				CE841F141C76151A000B80CC /* FeedViewModel.swift in Sources */,
 				CE841F151C76151A000B80CC /* ImageFetcher.swift in Sources */,
 				CE841F161C76151A000B80CC /* TweetViewModel.swift in Sources */,

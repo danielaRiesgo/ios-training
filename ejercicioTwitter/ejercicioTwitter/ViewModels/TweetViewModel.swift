@@ -7,28 +7,38 @@
 //
 
 import Foundation
+import ReactiveCocoa
 
-
-class TweetViewModel {
+struct TweetViewModel {
 
     let text: NSAttributedString
-    let timeAgo : String
-    let userName : String
-    let userImageURL : NSURL
-    private let imageFetcher: ImageFetcherType
     
-    init(text: NSAttributedString, timeAgo: String, userName: String, userImageURL: NSURL, imageFetcher: ImageFetcherType) {
-        self.text = text
-        self.timeAgo = timeAgo
-        self.userName = userName
-        self.userImageURL = userImageURL
-        self.imageFetcher = imageFetcher
+    let timeAgo: String
+    
+    var userName: String {
+        return _tweet.user.name
+    }
+
+    let fetchProfileImage: SignalProducer<UIImage, ImageFetcherError>
+    
+    private let _tweet: Tweet
+    
+    init(tweet: Tweet, imageFetcher: ImageFetcherType = ImageFetcher()) {
+        _tweet = tweet
+        fetchProfileImage = imageFetcher.fetchImage(tweet.user.profileImageURL).observeOn(UIScheduler())
+        timeAgo = tweet.createdAt.timeAgoSinceNow()
+        text = parseTweetContent(tweet)
     }
     
+}
+
+private func parseTweetContent(tweet: Tweet) -> NSAttributedString {
+    let text = NSMutableAttributedString(string: tweet.text)
     
-    func downloadProfileImage(URLSession: NSURLSession = NSURLSession.sharedSession(), completion: (NSData?, NSError?) -> ()) -> NSURLSessionDataTask {
-        let task = self.imageFetcher.downloadProfileImage(self.userImageURL, URLSession: URLSession, completion: completion)
-        return task
+    for userEntity in tweet.userEntities {
+        let length = userEntity.endIndex - userEntity.startIndex
+        text.addAttribute(NSLinkAttributeName, value: userEntity.entityURL, range: NSRange(location: userEntity.startIndex, length: length))
     }
     
+    return text
 }

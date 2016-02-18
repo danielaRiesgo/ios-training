@@ -7,10 +7,7 @@
 //
 
 import UIKit
-import Accounts
-import Social
-import Foundation
-
+import ReactiveCocoa
 
 
 class FeedViewController: UITableViewController {
@@ -19,7 +16,12 @@ class FeedViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.viewModel.searchForTweets(20) { _ in self.tableView.reloadData() }
+        viewModel.tweets.signal.observeNext { _ in self.tableView.reloadData() }
+        viewModel.searchForTweets.errors.observeNext { error in
+            print("Error fetching tweets \(error)")
+        }
+        viewModel.searchForTweets.apply(20).start()
+        
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -27,21 +29,9 @@ class FeedViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCellWithIdentifier("TweetTableCell") as! TweetTableCell
         let tweet = self.viewModel[indexPath.row]
-        cell.tweetTextView.attributedText = tweet.text
-        cell.userNameLabel.text = tweet.userName
-        cell.timeAgoLabel.text = tweet.timeAgo
-        cell.userImage.image = UIImage(named: "noPicture")
-        let task = tweet.downloadProfileImage { data, error in
-            if error == nil {
-                dispatch_async(dispatch_get_main_queue()) { cell.userImage.image = UIImage(data: data!)! }
-            } else {
-                print("Error fetching image \(error)")
-            }
-        }
-        cell.onPrepareForReuse = { _ in task.cancel() } // ¿Debería atrapar la excepción asi no aparece?
+        cell.bindViewModel(tweet)
         return cell
     }
 

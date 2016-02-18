@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Result
+import ReactiveCocoa
 
 final class TweetTableCell: UITableViewCell {
     
@@ -15,10 +17,21 @@ final class TweetTableCell: UITableViewCell {
     @IBOutlet weak var timeAgoLabel: UILabel!
     @IBOutlet weak var tweetTextView: UITextView!
     
-    var onPrepareForReuse: TweetTableCell -> () = { _ in }
-    
-    override func prepareForReuse() {
-        onPrepareForReuse(self)
+    var prepareForReuseProducer: SignalProducer<(), NoError> {
+        return rac_prepareForReuseSignal
+            .toSignalProducer()
+            .flatMapError { _ in SignalProducer.empty }
+            .map { _ in () }
     }
+    
+    func bindViewModel(tweet: TweetViewModel) {
+        userNameLabel.text = tweet.userName
+        timeAgoLabel.text = tweet.timeAgo
+        tweetTextView.attributedText = tweet.text
+        
+        tweet.fetchProfileImage.takeUntil(prepareForReuseProducer)
+            .startWithNext { self.userImage.image = $0 }
+    }
+
     
 }

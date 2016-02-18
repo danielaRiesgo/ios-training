@@ -11,17 +11,15 @@ import DateTools
 struct Tweet {
 
     let createdAt: NSDate
-    let text: NSAttributedString
+    let text: String
     let user: User
-    
-    var timeAgo: String {
-        return createdAt.timeAgoSinceNow()
-    }
-    
-    init(createdAt: NSDate, text: NSAttributedString, user: User) {
+    let userEntities: [TweetEntity]
+        
+    init(createdAt: NSDate, text: String, user: User, userEntities: [TweetEntity]) {
         self.createdAt = createdAt
         self.text = text
         self.user = user
+        self.userEntities = userEntities
     }
     
 }
