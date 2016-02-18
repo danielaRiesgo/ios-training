@@ -15,11 +15,11 @@ protocol AccountServiceType {
     
 }
 
-
 enum AccountError : ErrorType {
     case NoAccessGranted(ErrorType)
     case NoAccountAvailable
 }
+
 
 class AccountService : AccountServiceType {
 

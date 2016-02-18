@@ -18,12 +18,4 @@ struct User {
         self.profileImageURL = profileImageURL
     }
 
-    func downloadProfileImage(URLSession: NSURLSession = NSURLSession.sharedSession(), completion: (NSData?, NSError?) -> ()) -> NSURLSessionDataTask {
-        let task = URLSession.dataTaskWithRequest(NSURLRequest(URL: profileImageURL)) { data, _, error in
-            completion(data, error)
-        }
-        task.resume()
-        return task
-    }
-
 }

@@ -6,7 +6,6 @@
 //  Copyright © 2016 Daniela Riesgo. All rights reserved.
 //
 
-import UIKit
 import DateTools
 
 struct Tweet {
