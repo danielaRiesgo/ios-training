@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Result
+import enum Result.NoError
 import ReactiveCocoa
 
 final class TweetTableCell: UITableViewCell {

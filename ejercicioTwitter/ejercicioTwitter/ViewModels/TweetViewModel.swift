@@ -40,5 +40,10 @@ private func parseTweetContent(tweet: Tweet) -> NSAttributedString {
         text.addAttribute(NSLinkAttributeName, value: userEntity.entityURL, range: NSRange(location: userEntity.startIndex, length: length))
     }
     
+    for hashtagEntity in tweet.hashtagEntities {
+        let length = hashtagEntity.endIndex - hashtagEntity.startIndex
+        text.addAttribute(NSLinkAttributeName, value: hashtagEntity.entityURL, range: NSRange(location: hashtagEntity.startIndex, length: length))
+    }
+    
     return text
 }

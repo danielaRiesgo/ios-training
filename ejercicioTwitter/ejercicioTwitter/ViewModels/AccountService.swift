@@ -7,13 +7,8 @@
 //
 
 import Accounts
-import Result
+import ReactiveCocoa
 
-protocol AccountServiceType {
-    
-    func getTwitterAccount (completion: (Result<ACAccount, AccountError>) -> ())
-    
-}
 
 enum AccountError : ErrorType {
     case NoAccessGranted(ErrorType)
@@ -21,27 +16,21 @@ enum AccountError : ErrorType {
 }
 
 
-class AccountService : AccountServiceType {
+protocol AccountServiceType {
+    
+    func getTwitterAccount () -> SignalProducer<ACAccount, AccountError>
+    
+}
+
+final class AccountService : AccountServiceType {
 
     let accountStore = ACAccountStore()
     
-    func getTwitterAccount (completion: (Result<ACAccount, AccountError>) -> ()) {
-        let accountType = accountStore.accountTypeWithAccountTypeIdentifier(ACAccountTypeIdentifierTwitter)
-        accountStore.requestAccessToAccountsWithType(accountType, options: nil){ (granted, error) in
-            if (error == nil) {
-                let accounts = self.accountStore.accountsWithAccountType(accountType)
-                if accounts != nil {
-                    if case let twitterAccount as ACAccount = accounts.first {
-                        completion(.Success(twitterAccount))
-                    } else {
-                        completion(.Failure(.NoAccountAvailable))
-                    }
-                } else {
-                    completion(.Failure(.NoAccountAvailable))
-                }
-            } else {
-                completion(.Failure(.NoAccessGranted(error)))
-            }
+    func getTwitterAccount () -> SignalProducer<ACAccount, AccountError> {
+        let twitterAccountType = accountStore.accountTypeWithAccountTypeIdentifier(ACAccountTypeIdentifierTwitter)
+        let requestSignalProducer : SignalProducer<Bool, AccountError> = accountStore.requestAccessToAccountWithType(twitterAccountType, options: nil)
+        return requestSignalProducer.flatMap(.Concat) { _ -> SignalProducer<ACAccount, AccountError> in
+            return self.accountStore.accountsWithAccountType(twitterAccountType)
         }
     }
     

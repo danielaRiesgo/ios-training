@@ -23,12 +23,11 @@ protocol ImageFetcherType {
     
 }
 
-
 final class ImageFetcher : ImageFetcherType {
 
     private let _URLSession: NSURLSession
     
-    init(URLSession: NSURLSession = NSURLSession.sharedSession()) {
+    init(URLSession: NSURLSession = createCachedSession()) {
         _URLSession = URLSession
     }
     
@@ -40,4 +39,10 @@ final class ImageFetcher : ImageFetcherType {
             }
     }
     
+}
+
+private func createCachedSession() -> NSURLSession {
+    let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+    configuration.requestCachePolicy = .ReturnCacheDataElseLoad
+    return NSURLSession(configuration: configuration)
 }

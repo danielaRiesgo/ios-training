@@ -14,12 +14,14 @@ struct Tweet {
     let text: String
     let user: User
     let userEntities: [TweetEntity]
+    let hashtagEntities: [TweetEntity]
         
-    init(createdAt: NSDate, text: String, user: User, userEntities: [TweetEntity]) {
+    init(createdAt: NSDate, text: String, user: User, userEntities: [TweetEntity], hashtagEntities: [TweetEntity]) {
         self.createdAt = createdAt
         self.text = text
         self.user = user
         self.userEntities = userEntities
+        self.hashtagEntities = hashtagEntities
     }
     
 }

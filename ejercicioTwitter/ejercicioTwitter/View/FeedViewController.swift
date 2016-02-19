@@ -10,7 +10,7 @@ import UIKit
 import ReactiveCocoa
 
 
-class FeedViewController: UITableViewController {
+final class FeedViewController: UITableViewController {
     
     let viewModel = FeedViewModel(twitterService: TwitterService(accountService: AccountService()), imageFetcher: ImageFetcher())
     
@@ -20,7 +20,7 @@ class FeedViewController: UITableViewController {
         viewModel.searchForTweets.errors.observeNext { error in
             print("Error fetching tweets \(error)")
         }
-        viewModel.searchForTweets.apply(20).start()
+        viewModel.searchForTweets.apply(2).start()
         
     }
     

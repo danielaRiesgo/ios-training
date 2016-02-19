@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import UIKit
 import ReactiveCocoa
 
 final class FeedViewModel {
@@ -18,7 +17,7 @@ final class FeedViewModel {
     
     let tweets: AnyProperty<[TweetViewModel]>
     
-    let searchForTweets: Action<Int, [TweetViewModel], NSError>
+    let searchForTweets: Action<Int, [TweetViewModel], TwitterError>
     
     var tweetsCount : Int {
         return tweets.value.count
