@@ -52,7 +52,6 @@ private func parseTweet(tweetJSON: JSON) -> Tweet {
     let date = NSDate(string: dateString, formatString: "EEE MMM dd HH:mm:ssZ yyyy")
     
     let entities = tweetJSON["entities"] as! JSON
-    print("Entities: ", entities)
     let hashtags = entities["hashtags"] as! [JSON]!
     let hashtagEntities = hashtags.map { hashtagEntityJSON -> TweetEntity in
         let hashtagName =  hashtagEntityJSON["text"] as! String

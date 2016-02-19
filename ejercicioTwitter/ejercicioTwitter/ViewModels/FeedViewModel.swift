@@ -31,6 +31,7 @@ final class FeedViewModel {
             twitterService.getHomeTimeline(tweetsAmount).map { tweets in
                 tweets.map { TweetViewModel(tweet: $0) }
             }
+            .map { newTweets in  return newTweets}//self._tweets.value + newTweets }
             .observeOn(UIScheduler())
         }
         _tweets <~ searchForTweets.values
