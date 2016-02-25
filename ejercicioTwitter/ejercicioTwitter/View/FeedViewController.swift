@@ -20,6 +20,9 @@ final class FeedViewController: UITableViewController {
         viewModel.searchForTweets.errors.observeNext { error in
             print("Error fetching tweets \(error)")
         }
+        viewModel.searchForMoreTweets.errors.observeNext { error in
+            print("Error fetching tweets \(error)")
+        }
         viewModel.searchForTweets.apply(.None).start()
         refreshControl?.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
     }
@@ -38,14 +41,12 @@ final class FeedViewController: UITableViewController {
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if (indexPath.row == viewModel.tweetsCount-1) {
             print("Pide cargar más")
-            viewModel.searchForMoreTweets()
-            self.tableView.reloadData()
+            viewModel.searchForMoreTweets.apply(.None).start()
         }
     }
     
     func handleRefresh (refreshControl: UIRefreshControl) {
         viewModel.searchForTweets.apply(.None).start()
-        self.tableView.reloadData()
         refreshControl.endRefreshing()
     }
     
