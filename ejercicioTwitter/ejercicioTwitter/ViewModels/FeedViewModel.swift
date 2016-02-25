@@ -17,24 +17,43 @@ final class FeedViewModel {
     
     let tweets: AnyProperty<[TweetViewModel]>
     
-    let searchForTweets: Action<Int, [TweetViewModel], TwitterError>
+    let searchForTweets: Action<AnyObject?, [TweetViewModel], TwitterError>
+    private let _searchForMoreTweets: Action<AnyObject?, [TweetViewModel], TwitterError>
+    
+    let pageCount : Int
     
     var tweetsCount : Int {
         return tweets.value.count
     }
     
-    init(twitterService: TwitterServiceType, imageFetcher: ImageFetcherType) {
+    init(pageQuantity: Int, twitterService: TwitterServiceType, imageFetcher: ImageFetcherType) {
+        pageCount = pageQuantity
         _twitterService = twitterService
         _imageFetcher = imageFetcher
         tweets = AnyProperty(_tweets)
-        searchForTweets = Action { tweetsAmount in
-            twitterService.getHomeTimeline(tweetsAmount).map { tweets in
+        searchForTweets = Action { _ in
+            twitterService.getHomeTimeline(pageQuantity).map { tweets in
                 tweets.map { TweetViewModel(tweet: $0) }
             }
-            .map { newTweets in  return newTweets}//self._tweets.value + newTweets }
             .observeOn(UIScheduler())
         }
+        _searchForMoreTweets = Action { _ in
+            twitterService.getMoreHomeTimeline(pageQuantity).map { tweets in
+                tweets.map { TweetViewModel(tweet: $0) }
+                }
+                .observeOn(UIScheduler())
+        }
         _tweets <~ searchForTweets.values
+    }
+    
+    func searchForMoreTweets() {
+        _searchForMoreTweets.apply(.None).startWithNext { page in
+            print("Carga más")
+            print("Nuevos: \(page.map { $0.id })")
+            self._tweets.value = self._tweets.value + page
+            print("En total: \(self._tweets.value.map { $0.id })")
+        }
+
     }
     
     subscript(index: Int) -> TweetViewModel {

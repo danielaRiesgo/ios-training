@@ -23,6 +23,7 @@ enum TwitterError: ErrorType {
 protocol TwitterServiceType {
     
     func getHomeTimeline(quantity: Int) -> SignalProducer<[Tweet], TwitterError>
+    func getMoreHomeTimeline(quantity: Int) -> SignalProducer<[Tweet], TwitterError>
     
 }
 
@@ -30,6 +31,8 @@ protocol TwitterServiceType {
 final class TwitterService : TwitterServiceType {
     
     private let accountService : AccountServiceType
+    private var _lastMaxID : Int?
+    private var _newestMinID : Int?
     
     init(accountService: AccountServiceType) {
         self.accountService = accountService
@@ -40,7 +43,27 @@ final class TwitterService : TwitterServiceType {
             .mapError { TwitterError.CredentialsError($0) }
             .flatMap(.Concat) { fetchTimeline($0, quantity) }
             .flatMap(.Concat) { data, response in deserializeJSONArray(data) }
-            .map { $0.map(parseTweet) }
+            .map { $0.map(self.parseTweetAndID)}//.sort{ $0.id > $1.id } }
+    }
+    
+    func getMoreHomeTimeline(quantity: Int) -> SignalProducer<[Tweet], TwitterError> {
+        return accountService.getTwitterAccount()
+            .mapError { TwitterError.CredentialsError($0) }
+            .flatMap(.Concat) { fetchTimeline($0, quantity, maxID: self._lastMaxID) }
+            .flatMap(.Concat) { data, response in deserializeJSONArray(data) }
+            .map { $0.map(self.parseTweetAndID)}//.sort{ $0.id > $1.id } }
+    }
+    
+    private func parseTweetAndID(tweetJSON: JSON) -> Tweet {
+        let tweet = parseTweet(tweetJSON)
+        if _lastMaxID == nil || tweet.id < _lastMaxID {
+            _lastMaxID = tweet.id
+            print("Cambió el max ID a \(_lastMaxID!)")
+        }
+        if _newestMinID == nil || tweet.id > _newestMinID {
+            _newestMinID = tweet.id
+        }
+        return tweet
     }
 
 }
@@ -79,7 +102,9 @@ private func parseTweet(tweetJSON: JSON) -> Tweet {
     
     let user = User(name: username, profileImageURL: profileImageURL)
     
-    return Tweet(createdAt: date, text: tweetJSON["text"] as! String, user: user, userEntities: userEntities, hashtagEntities: hashtagEntities)
+    let id = tweetJSON["id"] as! Int
+    
+    return Tweet(id: id, createdAt: date, text: tweetJSON["text"] as! String, user: user, userEntities: userEntities, hashtagEntities: hashtagEntities)
 }
 
 private func deserializeJSONArray(data: NSData, options:  NSJSONReadingOptions) -> Result<[JSON], NSError> {
@@ -91,9 +116,18 @@ private func deserializeJSONArray(data: NSData) -> SignalProducer<[JSON], Twitte
     return SignalProducer.attempt { deserializeJSONArray(data, options: []).mapError { .DeserializationError($0) } }
 }
 
-private func fetchTimeline(account: ACAccount, _ quantity: Int) -> SignalProducer<(NSData, NSHTTPURLResponse), TwitterError> {
+private func fetchTimeline(account: ACAccount, _ quantity: Int, maxID: Int? = .None) -> SignalProducer<(NSData, NSHTTPURLResponse), TwitterError> {
     let requestURL = NSURL(string:"https://api.twitter.com/1.1/statuses/home_timeline.json?")
-    let request = SLRequest(forServiceType: SLServiceTypeTwitter, requestMethod: .GET, URL: requestURL, parameters: ["count" : quantity])
+    let parameters : [String : Int]
+    if maxID != nil {
+        print("Entró con max_id: \(maxID!-1)")
+        parameters = ["count" : quantity, "max_id" : maxID!-1]
+    } else {
+        print("Entró sin max_id")
+        parameters = ["count" : quantity]
+    }
+    print("Parameters: \(parameters)")
+    let request = SLRequest(forServiceType: SLServiceTypeTwitter, requestMethod: .GET, URL: requestURL, parameters: parameters)
     request.account = account
     return request.performWithSignal().mapError { .FetchError($0) }
 }

@@ -12,8 +12,7 @@ import ReactiveCocoa
 
 final class FeedViewController: UITableViewController {
     
-    let viewModel = FeedViewModel(twitterService: TwitterService(accountService: AccountService()), imageFetcher: ImageFetcher())
-    let loadingMore = false
+    let viewModel = FeedViewModel(pageQuantity: 20, twitterService: TwitterService(accountService: AccountService()), imageFetcher: ImageFetcher())
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +20,7 @@ final class FeedViewController: UITableViewController {
         viewModel.searchForTweets.errors.observeNext { error in
             print("Error fetching tweets \(error)")
         }
-        viewModel.searchForTweets.apply(20).start()
+        viewModel.searchForTweets.apply(.None).start()
         refreshControl?.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
     }
     
@@ -37,14 +36,15 @@ final class FeedViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if (indexPath.row == viewModel.tweetsCount && !loadingMore) {
-            //Aumentar la cantidad de tweets: viewModel.searchForTweets.apply(20).start()
+        if (indexPath.row == viewModel.tweetsCount-1) {
+            print("Pide cargar más")
+            viewModel.searchForMoreTweets()
             self.tableView.reloadData()
         }
     }
     
     func handleRefresh (refreshControl: UIRefreshControl) {
-        viewModel.searchForTweets.apply(20).start()
+        viewModel.searchForTweets.apply(.None).start()
         self.tableView.reloadData()
         refreshControl.endRefreshing()
     }

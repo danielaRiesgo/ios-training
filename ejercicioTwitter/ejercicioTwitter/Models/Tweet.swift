@@ -15,8 +15,10 @@ struct Tweet {
     let user: User
     let userEntities: [TweetEntity]
     let hashtagEntities: [TweetEntity]
+    let id : Int
         
-    init(createdAt: NSDate, text: String, user: User, userEntities: [TweetEntity], hashtagEntities: [TweetEntity]) {
+    init(id: Int, createdAt: NSDate, text: String, user: User, userEntities: [TweetEntity], hashtagEntities: [TweetEntity]) {
+        self.id = id
         self.createdAt = createdAt
         self.text = text
         self.user = user

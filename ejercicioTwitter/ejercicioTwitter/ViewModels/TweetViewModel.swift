@@ -15,6 +15,10 @@ struct TweetViewModel {
     
     let timeAgo: String
     
+    var id : Int {
+        return _tweet.id
+    }
+    
     var userName: String {
         return _tweet.user.name
     }
