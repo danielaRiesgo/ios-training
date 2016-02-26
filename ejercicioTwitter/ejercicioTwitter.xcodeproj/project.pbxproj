@@ -7,13 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CE562B971C7F9959005AC238 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE562B951C7F9959005AC238 /* Nimble.framework */; };
-		CE562B981C7F9959005AC238 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE562B961C7F9959005AC238 /* Quick.framework */; };
 		CE562B9A1C7FA083005AC238 /* DateTools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE562B991C7FA083005AC238 /* DateTools.framework */; };
 		CE562B9B1C7FA083005AC238 /* DateTools.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE562B991C7FA083005AC238 /* DateTools.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		CE562B9D1C7FA08E005AC238 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE562B9C1C7FA08E005AC238 /* Quick.framework */; };
 		CE562B9E1C7FA08E005AC238 /* Quick.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE562B9C1C7FA08E005AC238 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		CE562BA01C7FA094005AC238 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE562B9F1C7FA094005AC238 /* Nimble.framework */; };
 		CE562BA11C7FA094005AC238 /* Nimble.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE562B9F1C7FA094005AC238 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CE5DC4E81C76604700A35051 /* TweetEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5DC4E71C76604700A35051 /* TweetEntity.swift */; };
 		CE841F0C1C761506000B80CC /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE841F0A1C761506000B80CC /* FeedViewController.swift */; };
@@ -25,6 +21,8 @@
 		CE841F171C76151A000B80CC /* TwitterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE841F121C76151A000B80CC /* TwitterService.swift */; };
 		CE841F1A1C761532000B80CC /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE841F181C761532000B80CC /* Tweet.swift */; };
 		CE841F1B1C761532000B80CC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE841F191C761532000B80CC /* User.swift */; };
+		CE8B28951C80CA71002AE248 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE562B961C7F9959005AC238 /* Quick.framework */; };
+		CE8B28961C80CA7F002AE248 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE562B951C7F9959005AC238 /* Nimble.framework */; };
 		CE9FA5D61C6CF80000E32605 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9FA5D51C6CF80000E32605 /* AppDelegate.swift */; };
 		CE9FA5DB1C6CF80000E32605 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE9FA5D91C6CF80000E32605 /* Main.storyboard */; };
 		CE9FA5DD1C6CF80000E32605 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9FA5DC1C6CF80000E32605 /* Assets.xcassets */; };
@@ -58,6 +56,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		CE8B288E1C80A8FA002AE248 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CE9FA6061C6D03FF00E32605 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -92,6 +99,8 @@
 		CE841F121C76151A000B80CC /* TwitterService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TwitterService.swift; path = ViewModels/TwitterService.swift; sourceTree = "<group>"; };
 		CE841F181C761532000B80CC /* Tweet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tweet.swift; path = Models/Tweet.swift; sourceTree = "<group>"; };
 		CE841F191C761532000B80CC /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
+		CE8B288B1C80A60C002AE248 /* bin */ = {isa = PBXFileReference; lastKnownFileType = folder; name = bin; path = ../../../../../usr/bin; sourceTree = "<group>"; };
+		CE8B28921C80ADF9002AE248 /* Build */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Build; path = Carthage/Build; sourceTree = "<group>"; };
 		CE9FA5D21C6CF80000E32605 /* ejercicioTwitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ejercicioTwitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE9FA5D51C6CF80000E32605 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE9FA5DA1C6CF80000E32605 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -118,8 +127,6 @@
 				CE9FA60B1C6D044900E32605 /* Result.framework in Frameworks */,
 				CE9FA6111C6D04E100E32605 /* ReactiveCocoa.framework in Frameworks */,
 				CE562B9A1C7FA083005AC238 /* DateTools.framework in Frameworks */,
-				CE562BA01C7FA094005AC238 /* Nimble.framework in Frameworks */,
-				CE562B9D1C7FA08E005AC238 /* Quick.framework in Frameworks */,
 				CE9FA60E1C6D04DB00E32605 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -128,8 +135,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE562B971C7F9959005AC238 /* Nimble.framework in Frameworks */,
-				CE562B981C7F9959005AC238 /* Quick.framework in Frameworks */,
+				CE8B28961C80CA7F002AE248 /* Nimble.framework in Frameworks */,
+				CE8B28951C80CA71002AE248 /* Quick.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,6 +153,8 @@
 		7F221D9580822CFFA19E6756 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CE8B28921C80ADF9002AE248 /* Build */,
+				CE8B288B1C80A60C002AE248 /* bin */,
 				CE562B951C7F9959005AC238 /* Nimble.framework */,
 				CE562B961C7F9959005AC238 /* Quick.framework */,
 			);
@@ -256,6 +265,7 @@
 				CE9FA5D01C6CF80000E32605 /* Resources */,
 				CE9FA6061C6D03FF00E32605 /* Embed Frameworks */,
 				CE7FE3331C74D5EE00ACDFBF /* ShellScript */,
+				CE8B288E1C80A8FA002AE248 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -551,6 +561,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = ejercicioTwitter/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wolox.ejercicioTwitter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -566,6 +577,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = ejercicioTwitter/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wolox.ejercicioTwitter;
 				PRODUCT_NAME = "$(TARGET_NAME)";

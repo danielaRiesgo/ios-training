@@ -47,6 +47,20 @@ final class TwitterService : TwitterServiceType {
 
 }
 
+private func fetchTimeline(account: ACAccount, _ quantity: Int, maxID: Int? = .None) -> SignalProducer<(NSData, NSHTTPURLResponse), TwitterError> {
+    let requestURL : NSURL
+    if maxID != nil {
+        requestURL = NSURL(string:"https://api.twitter.com/1.1/statuses/home_timeline.json?count=\(quantity)&max_id=\(maxID!-1)")!
+    } else {
+        requestURL = NSURL(string:"https://api.twitter.com/1.1/statuses/home_timeline.json?count=\(quantity)")!
+    }
+    let request = SLRequest(forServiceType: SLServiceTypeTwitter, requestMethod: .GET, URL: requestURL, parameters: nil)
+    request.account = account
+    return request.performWithSignal().mapError { .FetchError($0) }
+}
+
+
+
 private typealias JSON = [String : AnyObject]
 
 private func parseTweet(tweetJSON: JSON) -> Tweet {
@@ -93,16 +107,4 @@ private func deserializeJSONArray(data: NSData, options:  NSJSONReadingOptions) 
 
 private func deserializeJSONArray(data: NSData) -> SignalProducer<[JSON], TwitterError> {
     return SignalProducer.attempt { deserializeJSONArray(data, options: []).mapError { .DeserializationError($0) } }
-}
-
-private func fetchTimeline(account: ACAccount, _ quantity: Int, maxID: Int? = .None) -> SignalProducer<(NSData, NSHTTPURLResponse), TwitterError> {
-    let requestURL : NSURL
-    if maxID != nil {
-        requestURL = NSURL(string:"https://api.twitter.com/1.1/statuses/home_timeline.json?count=\(quantity)&max_id=\(maxID!)")!
-    } else {
-        requestURL = NSURL(string:"https://api.twitter.com/1.1/statuses/home_timeline.json?count=\(quantity)")!
-    }
-    let request = SLRequest(forServiceType: SLServiceTypeTwitter, requestMethod: .GET, URL: requestURL, parameters: nil)
-    request.account = account
-    return request.performWithSignal().mapError { .FetchError($0) }
 }

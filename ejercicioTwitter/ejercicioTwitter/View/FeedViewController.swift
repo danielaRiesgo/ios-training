@@ -40,7 +40,6 @@ final class FeedViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if (indexPath.row == viewModel.tweetsCount-1) {
-            print("Pide cargar más")
             viewModel.searchForMoreTweets.apply(.None).start()
         }
     }
