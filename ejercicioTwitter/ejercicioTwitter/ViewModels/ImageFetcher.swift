@@ -8,22 +8,41 @@
 
 
 import Foundation
+import ReactiveCocoa
 
-protocol ImageFetcherType {
+enum ImageFetcherError: ErrorType {
     
-    func downloadProfileImage(url: NSURL, URLSession: NSURLSession, completion: (NSData?, NSError?) -> ()) -> NSURLSessionDataTask
+    case FetchError(NSError)
+    case InvalidImageData
     
 }
 
+protocol ImageFetcherType {
+    
+    func fetchImage(imageURL: NSURL) -> SignalProducer<UIImage, ImageFetcherError>
+    
+}
 
-class ImageFetcher : ImageFetcherType {
+final class ImageFetcher : ImageFetcherType {
 
-    func downloadProfileImage(url: NSURL, URLSession: NSURLSession = NSURLSession.sharedSession(), completion: (NSData?, NSError?) -> ()) -> NSURLSessionDataTask {
-        let task = URLSession.dataTaskWithRequest(NSURLRequest(URL: url)) { data, _, error in
-            completion(data, error)
-        }
-        task.resume()
-        return task
+    private let _URLSession: NSURLSession
+    
+    init(URLSession: NSURLSession = createCachedSession()) {
+        _URLSession = URLSession
     }
     
+    func fetchImage(imageURL: NSURL) -> SignalProducer<UIImage, ImageFetcherError> {
+        return _URLSession.rac_dataWithRequest(NSURLRequest(URL: imageURL))
+            .mapError { .FetchError($0) }
+            .flatMap(.Concat) { data, _ -> SignalProducer<UIImage, ImageFetcherError> in
+                UIImage(data: data).map { SignalProducer(value: $0) } ?? SignalProducer(error: .InvalidImageData)
+            }
+    }
+    
+}
+
+private func createCachedSession() -> NSURLSession {
+    let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+    configuration.requestCachePolicy = .ReturnCacheDataElseLoad
+    return NSURLSession(configuration: configuration)
 }

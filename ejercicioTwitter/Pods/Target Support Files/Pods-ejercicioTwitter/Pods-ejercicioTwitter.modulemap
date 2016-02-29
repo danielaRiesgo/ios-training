@@ -1,6 +1,0 @@
-framework module Pods_ejercicioTwitter {
-  umbrella header "Pods-ejercicioTwitter-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -7,19 +7,24 @@
 //
 
 import UIKit
-import Accounts
-import Social
-import Foundation
+import ReactiveCocoa
 
 
-
-class FeedViewController: UITableViewController {
+final class FeedViewController: UITableViewController {
     
-    let viewModel = FeedViewModel(twitterService: TwitterService(accountService: AccountService()), imageFetcher: ImageFetcher())
+    let viewModel = FeedViewModel(pageQuantity: 20, twitterService: TwitterService(accountService: AccountService()), imageFetcher: ImageFetcher())
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.viewModel.searchForTweets(20) { _ in self.tableView.reloadData() }
+        viewModel.tweets.signal.observeNext { _ in self.tableView.reloadData() }
+        viewModel.searchForTweets.errors.observeNext { error in
+            print("Error fetching tweets \(error)")
+        }
+        viewModel.searchForMoreTweets.errors.observeNext { error in
+            print("Error fetching tweets \(error)")
+        }
+        viewModel.searchForTweets.apply(.None).start()
+        refreshControl?.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -27,22 +32,21 @@ class FeedViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCellWithIdentifier("TweetTableCell") as! TweetTableCell
         let tweet = self.viewModel[indexPath.row]
-        cell.tweetTextView.attributedText = tweet.text
-        cell.userNameLabel.text = tweet.userName
-        cell.timeAgoLabel.text = tweet.timeAgo
-        cell.userImage.image = UIImage(named: "noPicture")
-        let task = tweet.downloadProfileImage { data, error in
-            if error == nil {
-                dispatch_async(dispatch_get_main_queue()) { cell.userImage.image = UIImage(data: data!)! }
-            } else {
-                print("Error fetching image \(error)")
-            }
-        }
-        cell.onPrepareForReuse = { _ in task.cancel() } // ¿Debería atrapar la excepción asi no aparece?
+        cell.bindViewModel(tweet)
         return cell
     }
-
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if (indexPath.row == viewModel.tweetsCount-1) {
+            viewModel.searchForMoreTweets.apply(.None).start()
+        }
+    }
+    
+    func handleRefresh (refreshControl: UIRefreshControl) {
+        viewModel.searchForTweets.apply(.None).start()
+        refreshControl.endRefreshing()
+    }
+    
 }

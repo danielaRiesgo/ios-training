@@ -7,87 +7,49 @@
 //
 
 import Foundation
-import UIKit
+import ReactiveCocoa
 
-typealias JSON = [String : AnyObject]
+final class FeedViewModel {
 
-func parseTweet(tweetJSON: JSON) -> Tweet {
-    let dateString = tweetJSON["created_at"] as! String
-    let date = NSDate(string: dateString, formatString: "EEE MMM dd HH:mm:ssZ yyyy")
+    private let _twitterService : TwitterServiceType
+    private let _imageFetcher: ImageFetcherType
+    private let _tweets = MutableProperty<[TweetViewModel]>([])
     
-    let text = NSMutableAttributedString(string: tweetJSON["text"] as! String)
-    let entities = tweetJSON["entities"] as! NSDictionary
-    let urls = entities["urls"] as! NSArray
-    for urlJson in urls {
-        let urlLink = NSURL(string: urlJson["expanded_url"] as! String)!
-        let startIndex = urlJson["indices"]!![0] as! Int
-        let endIndex = urlJson["indices"]!![1] as! Int
-        text.addAttribute(NSLinkAttributeName, value: urlLink, range: NSRange(location: startIndex, length: endIndex-startIndex))
-    }
-    let media = entities.objectForKey("media")
-    if media != nil {
-        let mediaArray = media as! NSArray
-        for mediaJson in mediaArray {
-            let urlLink = NSURL(string: mediaJson["expanded_url"] as! String)!
-            let startIndex = mediaJson["indices"]!![0] as! Int
-            let endIndex = mediaJson["indices"]!![1] as! Int
-            text.addAttribute(NSLinkAttributeName, value: urlLink, range: NSRange(location: startIndex, length: endIndex-startIndex))
-        }
-    }
-    let users = entities["user_mentions"] as! NSArray
-    for userJson in users {
-        let userName =  userJson["screen_name"] as! String
-        let urlLink = NSURL(string: "https://twitter.com/" + userName)!
-        let startIndex = userJson["indices"]!![0] as! Int
-        let endIndex = userJson["indices"]!![1] as! Int
-        text.addAttribute(NSLinkAttributeName, value: urlLink, range: NSRange(location: startIndex, length: endIndex-startIndex))
-    }
+    let tweets: AnyProperty<[TweetViewModel]>
     
-    let userJSON = tweetJSON["user"] as! [String : AnyObject]
-    let profileImageURL = NSURL(string: userJSON["profile_image_url_https"] as! String)!
-    let username = userJSON["name"] as! String
-    
-    let user = User(name: username, profileImageURL: profileImageURL)
-    
-    return Tweet(createdAt: date, text: text, user: user)
-    
-}
-
-
-
-class FeedViewModel {
-
-    private let twitterService : TwitterServiceType
-    private let imageFetcher: ImageFetcherType
-    private var tweets: [Tweet] = []
+    let searchForTweets: Action<AnyObject?, [TweetViewModel], TwitterError>
+    var searchForMoreTweets : Action<AnyObject?, [TweetViewModel], TwitterError>
     
     var tweetsCount : Int {
-        return tweets.count
+        return tweets.value.count
     }
     
-    init(twitterService: TwitterServiceType, imageFetcher: ImageFetcherType) {
-        self.twitterService = twitterService
-        self.imageFetcher = imageFetcher
-    }
-    
-    func searchForTweets(quantity: Int, completion: () -> ()) {
-        twitterService.getHomeTimeline(quantity) { result in
-            switch result {
-                case let .Failure(error):
-                    print("Error: \(error)")
-                case let .Success(jsonData):
-                    self.tweets = jsonData.map(parseTweet)
-                    dispatch_async(dispatch_get_main_queue(), {
-                        completion()
-                    })
-            }
+    init(pageQuantity: Int, twitterService: TwitterServiceType, imageFetcher: ImageFetcherType = ImageFetcher()) {
+        _twitterService = twitterService
+        _imageFetcher = imageFetcher
+        tweets = AnyProperty(_tweets)
+        searchForTweets = Action { _ in
+            twitterService.getHomeTimeline(pageQuantity, maxID: .None).map { tweets in
+                tweets.map { TweetViewModel(tweet: $0) }
+                }
+                .observeOn(UIScheduler())
+        }
+        
+        searchForMoreTweets = Action { _ in SignalProducer(error: .CredentialsError(.NoAccountAvailable)) } //Para que el compilador no se queje en lo siguiente.
+        searchForMoreTweets = Action { _ in
+            twitterService.getHomeTimeline(pageQuantity, maxID: self._tweets.value.last?.id).map { tweets in
+                tweets.map { TweetViewModel(tweet: $0) }
+                }
+                .observeOn(UIScheduler())
+        }
+        _tweets <~ searchForTweets.values
+        searchForMoreTweets.values.observeNext { page in
+            self._tweets.value = self._tweets.value + page
         }
     }
     
-    
     subscript(index: Int) -> TweetViewModel {
-        let tweet = self.tweets[index]
-        return TweetViewModel(text: tweet.text, timeAgo: tweet.timeAgo, userName: tweet.user.name, userImageURL: tweet.user.profileImageURL, imageFetcher: self.imageFetcher)
+        return _tweets.value[index]
     }
     
 }
