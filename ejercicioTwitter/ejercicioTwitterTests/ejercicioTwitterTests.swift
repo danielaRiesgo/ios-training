@@ -67,23 +67,20 @@ class FeedViewModelSpec: QuickSpec {
                         }
                     }}
                     
-                    it ("should return empty array when asked twice") { waitUntil (timeout: 10) { done in
+                    it ("should return empty array when asked twice") { waitUntil { done in
                         feedVM.searchForTweets.apply(.None)
                             .then(feedVM.searchForMoreTweets.apply(.None))
                             .then(feedVM.searchForTweets.apply(.None))
-                            .start { event
-                                switch
-                            }
-                        
-                        feedVM.searchForTweets.apply(.None).startWithCompleted {
-                            feedVM.searchForMoreTweets.apply(.None).startWithCompleted {
-                                feedVM.searchForTweets.apply(.None).startWithCompleted {
+                            .start { event in
+                                switch event {
+                                case .Completed:
                                     expect(feedVM.tweetsCount) == 0
                                     expect(feedVM.tweets.value.map { $0.id }) == []
                                     done()
+                                default:
+                                    break
                                 }
                             }
-                        }
                     }}
                     
                 }
@@ -117,16 +114,20 @@ class FeedViewModelSpec: QuickSpec {
                         }
                     }}
                     
-                    it ("should return array of 3 tweets when asked twice") { waitUntil (timeout: 10) { done in
-                        feedVM.searchForTweets.apply(.None).startWithCompleted {
-                            feedVM.searchForMoreTweets.apply(.None).startWithCompleted {
-                                feedVM.searchForTweets.apply(.None).startWithCompleted {
+                    it ("should return array of 3 tweets when asked twice") { waitUntil { done in
+                        feedVM.searchForTweets.apply(.None)
+                            .then(feedVM.searchForMoreTweets.apply(.None))
+                            .then(feedVM.searchForTweets.apply(.None))
+                            .start { event in
+                                switch event {
+                                case .Completed:
                                     expect(feedVM.tweetsCount) == 3
                                     expect(feedVM.tweets.value.map { $0.id } ) == [1,2,3]
                                     done()
+                                default:
+                                    break
                                 }
                             }
-                        }
                     }}
                     
                 }
@@ -143,16 +144,20 @@ class FeedViewModelSpec: QuickSpec {
                         }
                     }}
                     
-                    it ("should have array of 9 tweets when asked for more twice") { waitUntil (timeout: 10) { done in
-                        feedVM.searchForTweets.apply(.None).startWithCompleted {
-                            feedVM.searchForMoreTweets.apply(.None).startWithCompleted {
-                                feedVM.searchForMoreTweets.apply(.None).startWithCompleted {
+                    it ("should have array of 9 tweets when asked for more twice") { waitUntil { done in
+                        feedVM.searchForTweets.apply(.None)
+                            .then(feedVM.searchForMoreTweets.apply(.None))
+                            .then(feedVM.searchForMoreTweets.apply(.None))
+                            .start { event in
+                                switch event {
+                                case .Completed:
                                     expect(feedVM.tweetsCount) == 9
                                     expect(feedVM.tweets.value.map { $0.id } ) == [1,2,3,4,5,6,7,8,9]
                                     done()
+                                default:
+                                    break
                                 }
                             }
-                        }
                     }}
                     
                 }
