@@ -15,6 +15,7 @@
 		CE2C20731C8499AF00085DBF /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE2C20711C8499AF00085DBF /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CE2C20761C8499B700085DBF /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2C20751C8499B700085DBF /* ReactiveCocoa.framework */; };
 		CE2C20771C8499B700085DBF /* ReactiveCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE2C20751C8499B700085DBF /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CE5E48E31C85F1750010D888 /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5E48E21C85F1750010D888 /* PersistenceService.swift */; };
 		CE8B28A41C80D6BB002AE248 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8B28A31C80D6BB002AE248 /* AppDelegate.swift */; };
 		CE8B28A91C80D6BB002AE248 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE8B28A71C80D6BB002AE248 /* Main.storyboard */; };
 		CE8B28AB1C80D6BB002AE248 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE8B28AA1C80D6BB002AE248 /* Assets.xcassets */; };
@@ -72,6 +73,7 @@
 		CE2C206F1C84957200085DBF /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		CE2C20711C8499AF00085DBF /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
 		CE2C20751C8499B700085DBF /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
+		CE5E48E21C85F1750010D888 /* PersistenceService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
 		CE8B28A01C80D6BB002AE248 /* ejercicioContactos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ejercicioContactos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE8B28A31C80D6BB002AE248 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE8B28A81C80D6BB002AE248 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				CE2C20691C84814F00085DBF /* ContactViewModel.swift */,
 				CE2C206B1C84944900085DBF /* ContactsAgendaViewModel.swift */,
 				CE2C206D1C84953C00085DBF /* ContactService.swift */,
+				CE5E48E21C85F1750010D888 /* PersistenceService.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -361,6 +364,7 @@
 				CE2C206C1C84944900085DBF /* ContactsAgendaViewModel.swift in Sources */,
 				CE8B28D91C80E199002AE248 /* ContactTableCell.swift in Sources */,
 				CE2C206E1C84953C00085DBF /* ContactService.swift in Sources */,
+				CE5E48E31C85F1750010D888 /* PersistenceService.swift in Sources */,
 				CE2C20701C84957200085DBF /* Contact.swift in Sources */,
 				CE2C206A1C84814F00085DBF /* ContactViewModel.swift in Sources */,
 				CE8B28D51C80E150002AE248 /* MainViewController.swift in Sources */,

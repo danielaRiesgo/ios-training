@@ -15,8 +15,10 @@ struct Contact {
     let phone : String?
     let favourited: Bool
     let image: NSData?
+    let id: String
 
-    init(name: String, email: String?, phoneNumber: String?, imageData: NSData?, favourite: Bool = false) {
+    init(id: String, name: String, email: String?, phoneNumber: String?, imageData: NSData?, favourite: Bool = false) {
+        self.id = id
         self.name = name
         self.email = email
         self.phone = phoneNumber

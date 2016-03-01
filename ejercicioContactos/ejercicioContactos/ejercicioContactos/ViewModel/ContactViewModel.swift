@@ -8,16 +8,29 @@
 
 import Foundation
 import UIKit
+import RealmSwift
 
-class ContactViewModel {
+class ContactViewModel : Object {
     
-    let name : String
-    let email : String
-    let phone : String
+    dynamic var name : String
+    dynamic var email : String
+    dynamic var phone : String
     var favourited: Bool
-    let image: UIImage
+    dynamic var image: UIImage
+    dynamic var id: String
+    
+    required init() {
+        self.id = " "
+        self.name = " "
+        self.email = " "
+        self.phone = " "
+        self.favourited = false
+        self.image = UIImage(named: "noPicture")!
+        super.init()
+    }
     
     init(contact: Contact) {
+        self.id = contact.id
         self.name = contact.name
         self.email = contact.email ?? " "
         self.phone = contact.phone ?? " "
@@ -27,6 +40,11 @@ class ContactViewModel {
         } else {
             self.image = UIImage(named: "noPicture")!
         }
+        super.init()
+    }
+    
+    override static func ignoredProperties() -> [String] {
+        return ["name", "email", "phone", "favourited", "image"]
     }
     
 }

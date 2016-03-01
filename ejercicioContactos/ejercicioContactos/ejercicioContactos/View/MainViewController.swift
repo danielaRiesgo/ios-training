@@ -20,18 +20,19 @@ final class MainViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        favouritesAllSegmentedControl.selectedSegmentIndex = 1  //Todos
-        
         let sb = UIStoryboard(name: "Main", bundle: nil)
         self.contactsTableViewController = sb.instantiateViewControllerWithIdentifier("ContactTableViewController") as! ContactTableViewController
         self.addChildViewController(self.contactsTableViewController)
         self.contactTableView.addSubview(self.contactsTableViewController.view)
         self.contactsTableViewController.view.frame = self.contactTableView.bounds
         
-        self.contactsTableViewController.setViewModel(ContactsAgendaViewModel())
+        let contactsVM = ContactsAgendaViewModel()
+        self.contactsTableViewController.setViewModel(contactsVM)
         favouritesAllSegmentedControl.addTarget(self.contactsTableViewController, action: "segmentSelected:", forControlEvents: .ValueChanged)
         
+        
+        favouritesAllSegmentedControl.selectedSegmentIndex = contactsVM.favourites ? 0 : 1
+        
     }
-    
     
 }

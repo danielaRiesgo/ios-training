@@ -17,8 +17,8 @@ final class ContactTableViewController : UITableViewController {
     
     func setViewModel(vm : ContactsAgendaViewModel) {
         self.viewModel = vm
-        self.viewModel!.contactsShown.signal.observeOn(UIScheduler()).observeNext { _ in self.tableView.reloadData() }
-        self.viewModel!.updateContacts.apply(.None).start()
+        vm.contactsShown.signal.observeOn(UIScheduler()).observeNext { _ in self.tableView.reloadData() }
+        vm.updateContacts.apply(.None).start()
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -34,7 +34,7 @@ final class ContactTableViewController : UITableViewController {
  
     func segmentSelected(sender: UISegmentedControl) {
         //print("Llamó a segmentSelected")
-        self.viewModel!.changeList.apply(sender.selectedSegmentIndex == 0).start()
+        self.viewModel?.changeList.apply(sender.selectedSegmentIndex == 0).start()
     }
     
 }

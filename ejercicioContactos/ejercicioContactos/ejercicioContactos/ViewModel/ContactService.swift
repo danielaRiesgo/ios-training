@@ -16,15 +16,37 @@ enum ContactsFetchingError : ErrorType {
     case FetchingContactsFromContainerError(CNContainer)
 }
 
+enum ContactServiceEvent {
+    case FavoriteChanged(Contact)    //Devuelve los contactos nuevos, así los contactos son inmutables.
+    case DeletedContact(Contact)
+    case UpdatedContact(Contact)
+    case NewContact(Contact)
+    case ContactsChanged
+}
+
 protocol ContactServiceType {
     
+    var events: Signal<ContactServiceEvent, ContactsFetchingError> { get }
     func getContacts() -> SignalProducer<[Contact], ContactsFetchingError>
+    func updateFavorite(contactID: String, favorite: Bool) -> SignalProducer<Contact, NSError>
     
 }
 
 class ContactService : ContactServiceType {
     
+    let events: Signal<ContactServiceEvent, ContactsFetchingError>
     let contactStore = CNContactStore()
+    private let _persistenceService: PersistenceServiceType
+    
+    init(persistenceService : PersistenceServiceType = PersistenceService()) {
+        self._persistenceService = persistenceService
+        //self.events = Signal<ContactServiceEvent, ContactsFetchingError> { _ in nil } ¿Cómo se inicializa una señal?
+        NSNotificationCenter().addObserver(self, selector: ":contactsChanged", name: CNContactStoreDidChangeNotification, object: nil)
+    }
+    
+    func contactsChanged(notification: NSNotification) {
+        //cargar contactos de nuevo y mandar a events lo que pasó.
+    }
     
     func getContacts() -> SignalProducer<[Contact], ContactsFetchingError> {
         //print("Entra a pedir contactos")
@@ -63,8 +85,8 @@ private func parseContact(cnContact: CNContact) -> Contact {
     //print("Entra a parsear CNContact")
     let fullName = CNContactFormatter.stringFromContact(cnContact, style: .FullName)!
     let emailAddress = cnContact.emailAddresses.first?.value as? String
-    let phoneNumber : String? = (cnContact.phoneNumbers.first?.value as! CNPhoneNumber).stringValue
+    let phoneNumber : String? = (cnContact.phoneNumbers.first?.value as? CNPhoneNumber)?.stringValue
     let imageData : NSData? = cnContact.thumbnailImageData //.imageData ? Y tira error de noFetchedProperty
-    return Contact(name: fullName, email: emailAddress, phoneNumber: phoneNumber, imageData: imageData)
+    return Contact(id: cnContact.identifier, name: fullName, email: emailAddress, phoneNumber: phoneNumber, imageData: imageData)
     
 }
