@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE2C206A1C84814F00085DBF /* ContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2C20691C84814F00085DBF /* ContactViewModel.swift */; };
+		CE2C206C1C84944900085DBF /* ContactsAgendaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2C206B1C84944900085DBF /* ContactsAgendaViewModel.swift */; };
+		CE2C206E1C84953C00085DBF /* ContactService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2C206D1C84953C00085DBF /* ContactService.swift */; };
+		CE2C20701C84957200085DBF /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2C206F1C84957200085DBF /* Contact.swift */; };
+		CE2C20721C8499AF00085DBF /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2C20711C8499AF00085DBF /* Result.framework */; };
+		CE2C20731C8499AF00085DBF /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE2C20711C8499AF00085DBF /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CE2C20761C8499B700085DBF /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2C20751C8499B700085DBF /* ReactiveCocoa.framework */; };
+		CE2C20771C8499B700085DBF /* ReactiveCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE2C20751C8499B700085DBF /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CE8B28A41C80D6BB002AE248 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8B28A31C80D6BB002AE248 /* AppDelegate.swift */; };
 		CE8B28A91C80D6BB002AE248 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE8B28A71C80D6BB002AE248 /* Main.storyboard */; };
 		CE8B28AB1C80D6BB002AE248 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE8B28AA1C80D6BB002AE248 /* Assets.xcassets */; };
@@ -35,7 +43,28 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		CE2C20741C8499B000085DBF /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				CE2C20731C8499AF00085DBF /* Result.framework in Embed Frameworks */,
+				CE2C20771C8499B700085DBF /* ReactiveCocoa.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		CE2C20691C84814F00085DBF /* ContactViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactViewModel.swift; path = ViewModel/ContactViewModel.swift; sourceTree = "<group>"; };
+		CE2C206B1C84944900085DBF /* ContactsAgendaViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactsAgendaViewModel.swift; path = ViewModel/ContactsAgendaViewModel.swift; sourceTree = "<group>"; };
+		CE2C206D1C84953C00085DBF /* ContactService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactService.swift; path = ViewModel/ContactService.swift; sourceTree = "<group>"; };
+		CE2C206F1C84957200085DBF /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		CE2C20711C8499AF00085DBF /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
+		CE2C20751C8499B700085DBF /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
 		CE8B28A01C80D6BB002AE248 /* ejercicioContactos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ejercicioContactos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE8B28A31C80D6BB002AE248 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE8B28A81C80D6BB002AE248 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -58,6 +87,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE2C20721C8499AF00085DBF /* Result.framework in Frameworks */,
+				CE2C20761C8499B700085DBF /* ReactiveCocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +112,8 @@
 		CE8B28971C80D6BB002AE248 = {
 			isa = PBXGroup;
 			children = (
+				CE2C20751C8499B700085DBF /* ReactiveCocoa.framework */,
+				CE2C20711C8499AF00085DBF /* Result.framework */,
 				CE8B28A21C80D6BB002AE248 /* ejercicioContactos */,
 				CE8B28B71C80D6BB002AE248 /* ejercicioContactosTests */,
 				CE8B28C21C80D6BB002AE248 /* ejercicioContactosUITests */,
@@ -144,6 +177,9 @@
 		CE8B28D21C80E023002AE248 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				CE2C20691C84814F00085DBF /* ContactViewModel.swift */,
+				CE2C206B1C84944900085DBF /* ContactsAgendaViewModel.swift */,
+				CE2C206D1C84953C00085DBF /* ContactService.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -151,6 +187,7 @@
 		CE8B28D31C80E02C002AE248 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CE2C206F1C84957200085DBF /* Contact.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -165,6 +202,8 @@
 				CE8B289C1C80D6BB002AE248 /* Sources */,
 				CE8B289D1C80D6BB002AE248 /* Frameworks */,
 				CE8B289E1C80D6BB002AE248 /* Resources */,
+				CE2C20741C8499B000085DBF /* Embed Frameworks */,
+				CE2C20791C849A1C00085DBF /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -281,13 +320,33 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		CE2C20791C849A1C00085DBF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		CE8B289C1C80D6BB002AE248 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				CE8B28A41C80D6BB002AE248 /* AppDelegate.swift in Sources */,
+				CE2C206C1C84944900085DBF /* ContactsAgendaViewModel.swift in Sources */,
 				CE8B28D91C80E199002AE248 /* ContactTableCell.swift in Sources */,
+				CE2C206E1C84953C00085DBF /* ContactService.swift in Sources */,
+				CE2C20701C84957200085DBF /* Contact.swift in Sources */,
+				CE2C206A1C84814F00085DBF /* ContactViewModel.swift in Sources */,
 				CE8B28D51C80E150002AE248 /* MainViewController.swift in Sources */,
 				CE8B28D71C80E182002AE248 /* ContactTableViewController.swift in Sources */,
 			);
@@ -431,6 +490,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = ejercicioContactos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wolox.ejercicioContactos;
@@ -442,6 +505,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = ejercicioContactos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wolox.ejercicioContactos;
@@ -516,6 +583,7 @@
 				CE8B28CA1C80D6BB002AE248 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CE8B28CB1C80D6BB002AE248 /* Build configuration list for PBXNativeTarget "ejercicioContactosTests" */ = {
 			isa = XCConfigurationList;
@@ -524,6 +592,7 @@
 				CE8B28CD1C80D6BB002AE248 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CE8B28CE1C80D6BB002AE248 /* Build configuration list for PBXNativeTarget "ejercicioContactosUITests" */ = {
 			isa = XCConfigurationList;
@@ -532,6 +601,7 @@
 				CE8B28D01C80D6BB002AE248 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
