@@ -34,7 +34,7 @@ final class ContactTableCell : UITableViewCell {
     
     func click(sender: UIButton) {
         self.contact.favourited = !self.contact.favourited
-        print("Llama a buttonAction")
+        //print("Llama a buttonAction")
         self.buttonAction()
     }
     

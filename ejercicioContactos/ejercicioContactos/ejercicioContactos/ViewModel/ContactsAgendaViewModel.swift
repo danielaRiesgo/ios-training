@@ -43,11 +43,12 @@ final class ContactsAgendaViewModel {
             return SignalProducer(value: value)
         }
         self.updateContacts = Action { _ in
-            print("Llama a updateContacts")
+            //print("Llama a updateContacts")
             return SignalProducer(value: contactService.getContacts().map { ContactViewModel(contact: $0) })
                 .on(completed: {self.changeList.apply(self._favourites).start()})
         }
         self.updateFavourites = Action { _ in
+            //print("En update favourties")
             let value: [ContactViewModel]
             if self._favourites {
                 value = self._contacts.value.filter { $0.favourited }
@@ -58,6 +59,7 @@ final class ContactsAgendaViewModel {
         }
         _contacts <~ self.updateContacts.values
         _contactsShown <~ self.changeList.values
+        _contactsShown <~ self.updateFavourites.values
     }
     
     subscript(index: Int) -> ContactViewModel {
