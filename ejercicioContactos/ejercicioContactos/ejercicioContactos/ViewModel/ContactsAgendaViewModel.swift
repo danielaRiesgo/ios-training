@@ -8,6 +8,7 @@
 
 import Foundation
 import ReactiveCocoa
+import enum Result.NoError
 
 final class ContactsAgendaViewModel {
     private let _contactService : ContactServiceType
@@ -16,9 +17,9 @@ final class ContactsAgendaViewModel {
     private var _favourites : Bool = false
     
     let contactsShown : AnyProperty<[ContactViewModel]>
-    var changeList: Action<Bool, [ContactViewModel], NSError>
-    var updateContacts: Action<AnyObject?, [ContactViewModel], NSError>
-    var updateFavourites: Action<AnyObject?, [ContactViewModel], NSError>
+    var changeList: Action<Bool, [ContactViewModel], NoError>
+    var updateContacts: Action<AnyObject?, [ContactViewModel], ContactsFetchingError>
+    var updateFavourites: Action<AnyObject?, [ContactViewModel], NoError>
     
     var contactsCount : Int {
         return _contactsShown.value.count
@@ -44,8 +45,8 @@ final class ContactsAgendaViewModel {
         }
         self.updateContacts = Action { _ in
             //print("Llama a updateContacts")
-            return SignalProducer(value: contactService.getContacts().map { ContactViewModel(contact: $0) })
-                .on(completed: {self.changeList.apply(self._favourites).start()})
+            return contactService.getContacts().map { $0.map {contact in ContactViewModel(contact: contact)} }
+                .on(completed: { self.changeList.apply(self._favourites).start() })
         }
         self.updateFavourites = Action { _ in
             //print("En update favourties")

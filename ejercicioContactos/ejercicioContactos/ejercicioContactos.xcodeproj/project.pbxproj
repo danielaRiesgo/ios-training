@@ -24,6 +24,11 @@
 		CE8B28D51C80E150002AE248 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8B28D41C80E150002AE248 /* MainViewController.swift */; };
 		CE8B28D71C80E182002AE248 /* ContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8B28D61C80E182002AE248 /* ContactTableViewController.swift */; };
 		CE8B28D91C80E199002AE248 /* ContactTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8B28D81C80E199002AE248 /* ContactTableCell.swift */; };
+		CEC760F21C85D28600595885 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC760F11C85D28600595885 /* Realm.framework */; };
+		CEC760F31C85D28600595885 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEC760F11C85D28600595885 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CEC760F51C85D28E00595885 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC760F41C85D28E00595885 /* RealmSwift.framework */; };
+		CEC760F61C85D28E00595885 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEC760F41C85D28E00595885 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CEC760F81C85E40800595885 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC760F71C85E40800595885 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +55,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				CEC760F31C85D28600595885 /* Realm.framework in Embed Frameworks */,
 				CE2C20731C8499AF00085DBF /* Result.framework in Embed Frameworks */,
+				CEC760F61C85D28E00595885 /* RealmSwift.framework in Embed Frameworks */,
 				CE2C20771C8499B700085DBF /* ReactiveCocoa.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -80,6 +87,9 @@
 		CE8B28D41C80E150002AE248 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = View/MainViewController.swift; sourceTree = "<group>"; };
 		CE8B28D61C80E182002AE248 /* ContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactTableViewController.swift; path = View/ContactTableViewController.swift; sourceTree = "<group>"; };
 		CE8B28D81C80E199002AE248 /* ContactTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactTableCell.swift; path = View/ContactTableCell.swift; sourceTree = "<group>"; };
+		CEC760F11C85D28600595885 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
+		CEC760F41C85D28E00595885 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
+		CEC760F71C85E40800595885 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,7 +97,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEC760F21C85D28600595885 /* Realm.framework in Frameworks */,
 				CE2C20721C8499AF00085DBF /* Result.framework in Frameworks */,
+				CEC760F51C85D28E00595885 /* RealmSwift.framework in Frameworks */,
 				CE2C20761C8499B700085DBF /* ReactiveCocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -112,6 +124,8 @@
 		CE8B28971C80D6BB002AE248 = {
 			isa = PBXGroup;
 			children = (
+				CEC760F41C85D28E00595885 /* RealmSwift.framework */,
+				CEC760F11C85D28600595885 /* Realm.framework */,
 				CE2C20751C8499B700085DBF /* ReactiveCocoa.framework */,
 				CE2C20711C8499AF00085DBF /* Result.framework */,
 				CE8B28A21C80D6BB002AE248 /* ejercicioContactos */,
@@ -142,6 +156,7 @@
 				CE8B28AA1C80D6BB002AE248 /* Assets.xcassets */,
 				CE8B28AC1C80D6BB002AE248 /* LaunchScreen.storyboard */,
 				CE8B28AF1C80D6BB002AE248 /* Info.plist */,
+				CEC760F71C85E40800595885 /* Extensions.swift */,
 			);
 			path = ejercicioContactos;
 			sourceTree = "<group>";
@@ -342,6 +357,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE8B28A41C80D6BB002AE248 /* AppDelegate.swift in Sources */,
+				CEC760F81C85E40800595885 /* Extensions.swift in Sources */,
 				CE2C206C1C84944900085DBF /* ContactsAgendaViewModel.swift in Sources */,
 				CE8B28D91C80E199002AE248 /* ContactTableCell.swift in Sources */,
 				CE2C206E1C84953C00085DBF /* ContactService.swift in Sources */,

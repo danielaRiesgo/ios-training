@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import ReactiveCocoa
 
 
 final class ContactTableViewController : UITableViewController {
@@ -16,8 +17,7 @@ final class ContactTableViewController : UITableViewController {
     
     func setViewModel(vm : ContactsAgendaViewModel) {
         self.viewModel = vm
-        self.viewModel!.contactsShown.signal.observeNext { _ in //print("Y acá llama a reload")
-                                                                self.tableView.reloadData() }
+        self.viewModel!.contactsShown.signal.observeOn(UIScheduler()).observeNext { _ in self.tableView.reloadData() }
         self.viewModel!.updateContacts.apply(.None).start()
     }
     

@@ -19,10 +19,14 @@ class ContactViewModel {
     
     init(contact: Contact) {
         self.name = contact.name
-        self.email = contact.email
-        self.phone = contact.phone
+        self.email = contact.email ?? " "
+        self.phone = contact.phone ?? " "
         self.favourited = contact.favourited
-        self.image = UIImage(named: "noPicture")!
+        if let data = contact.image {
+            self.image = UIImage(data: data)!
+        } else {
+            self.image = UIImage(named: "noPicture")!
+        }
     }
     
 }

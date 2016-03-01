@@ -11,15 +11,17 @@ import Foundation
 struct Contact {
     
     let name : String
-    let email : String
-    let phone : String
+    let email : String?
+    let phone : String?
     let favourited: Bool
+    let image: NSData?
 
-    init(name: String, email: String, phoneNumber: String, favourite: Bool = false) {
+    init(name: String, email: String?, phoneNumber: String?, imageData: NSData?, favourite: Bool = false) {
         self.name = name
         self.email = email
         self.phone = phoneNumber
         self.favourited = favourite
+        self.image = imageData
     }
 
     
