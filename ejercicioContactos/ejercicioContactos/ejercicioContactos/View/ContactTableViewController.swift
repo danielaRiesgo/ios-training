@@ -18,13 +18,13 @@ final class ContactTableViewController : UITableViewController {
     func setViewModel(vm : ContactsAgendaViewModel) {
         self.viewModel = vm
         vm.contactsShown.signal.observeOn(UIScheduler()).observeNext { _ in self.tableView.reloadData() }
-        vm.updateContacts.apply(.None).start()
+        //Hay que cambiar el filter para que updatee?
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ContactTableCell") as! ContactTableCell
         let contact = self.viewModel![indexPath.row]
-        cell.bindViewModel(contact, buttonAction: { self.viewModel!.updateFavourites.apply(.None).start() } )
+        cell.bindViewModel(contact)
         return cell
     }
     
@@ -32,9 +32,9 @@ final class ContactTableViewController : UITableViewController {
         return self.viewModel?.contactsCount ?? 0
     }
  
-    func segmentSelected(sender: UISegmentedControl) {
+    func segmentSelected(newFilter: ContactsAgendaViewModel.Filter) {
         //print("Llamó a segmentSelected")
-        self.viewModel?.changeList.apply(sender.selectedSegmentIndex == 0).start()
+        self.viewModel?.activeFilter.value = newFilter
     }
     
 }

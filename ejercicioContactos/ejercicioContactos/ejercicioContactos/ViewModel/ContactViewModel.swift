@@ -10,41 +10,40 @@ import Foundation
 import UIKit
 import RealmSwift
 
-class ContactViewModel : Object {
+struct ContactViewModel {
     
-    dynamic var name : String
-    dynamic var email : String
-    dynamic var phone : String
-    var favourited: Bool
-    dynamic var image: UIImage
-    dynamic var id: String
+    private let _contact : Contact
+    private let _contactService : ContactServiceType
+    let image: UIImage
     
-    required init() {
-        self.id = " "
-        self.name = " "
-        self.email = " "
-        self.phone = " "
-        self.favourited = false
-        self.image = UIImage(named: "noPicture")!
-        super.init()
+    var name : String {
+        return self._contact.name
+    }
+    var email : String {
+        return self._contact.email ?? " "
+    }
+    var phone : String {
+        return self._contact.phone ?? " "
+    }
+    var favourited: Bool {
+        return self._contact.favourited
+    }
+    var id: String {
+        return self._contact.id
     }
     
-    init(contact: Contact) {
-        self.id = contact.id
-        self.name = contact.name
-        self.email = contact.email ?? " "
-        self.phone = contact.phone ?? " "
-        self.favourited = contact.favourited
+    init(contact: Contact, contactService: ContactServiceType) {
+        self._contact = contact
+        self._contactService = contactService
         if let data = contact.image {
             self.image = UIImage(data: data)!
         } else {
             self.image = UIImage(named: "noPicture")!
         }
-        super.init()
     }
     
-    override static func ignoredProperties() -> [String] {
-        return ["name", "email", "phone", "favourited", "image"]
+    func changeFavouriteState() {
+        self._contactService.updateFavourite(self._contact, favourite: !self.favourited)
     }
     
 }

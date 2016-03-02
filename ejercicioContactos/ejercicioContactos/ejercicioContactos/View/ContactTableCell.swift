@@ -17,12 +17,11 @@ final class ContactTableCell : UITableViewCell {
     @IBOutlet weak var contactPhoneLabel: UILabel!
     @IBOutlet weak var contactMailLabel: UILabel!
     @IBOutlet weak var favouriteButton: UIButton!
+    
     var contact: ContactViewModel!
-    var buttonAction: () -> () = {}
     
     
-    func bindViewModel(contact: ContactViewModel, buttonAction: () -> ()) {
-        self.buttonAction = buttonAction
+    func bindViewModel(contact: ContactViewModel) {
         self.contact = contact
         self.contactImage.image = contact.image
         self.contactNameLabel.text = contact.name
@@ -33,9 +32,8 @@ final class ContactTableCell : UITableViewCell {
     }
     
     func click(sender: UIButton) {
-        self.contact.favourited = !self.contact.favourited
         //print("Llama a buttonAction")
-        self.buttonAction()
+        self.contact.changeFavouriteState()
     }
     
 }

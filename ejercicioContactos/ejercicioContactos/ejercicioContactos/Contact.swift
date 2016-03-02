@@ -7,15 +7,16 @@
 //
 
 import Foundation
+import RealmSwift
 
-struct Contact {
+final class Contact : Object {
     
-    let name : String
-    let email : String?
-    let phone : String?
-    let favourited: Bool
-    let image: NSData?
-    let id: String
+    dynamic var id: String
+    dynamic var name : String
+    dynamic var email : String?
+    dynamic var phone : String?
+    var favourited: Bool
+    dynamic var image: NSData?
 
     init(id: String, name: String, email: String?, phoneNumber: String?, imageData: NSData?, favourite: Bool = false) {
         self.id = id
@@ -24,7 +25,22 @@ struct Contact {
         self.phone = phoneNumber
         self.favourited = favourite
         self.image = imageData
+        
+        super.init()
     }
-
+    
+    required init() {
+        self.id = " "
+        self.name = " "
+        self.email = .None
+        self.phone = .None
+        self.favourited = false
+        self.image = .None
+        super.init()
+    }
+    
+    override static func ignoredProperties() -> [String] {
+        return ["name", "email", "phone", "favourited", "image"]
+    }
     
 }

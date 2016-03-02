@@ -28,11 +28,27 @@ final class MainViewController : UIViewController {
         
         let contactsVM = ContactsAgendaViewModel()
         self.contactsTableViewController.setViewModel(contactsVM)
-        favouritesAllSegmentedControl.addTarget(self.contactsTableViewController, action: "segmentSelected:", forControlEvents: .ValueChanged)
+        favouritesAllSegmentedControl.addTarget(self, action: "segmentSelected:", forControlEvents: .ValueChanged)
         
-        
-        favouritesAllSegmentedControl.selectedSegmentIndex = contactsVM.favourites ? 0 : 1
-        
+        let segmentNumber : Int
+        switch contactsVM.activeFilter.value {
+        case .All:
+            segmentNumber = 1
+        case .Favourites:
+            segmentNumber = 0
+        }
+        favouritesAllSegmentedControl.selectedSegmentIndex = segmentNumber
+    }
+    
+    func segmentSelected(sender: UISegmentedControl) {
+        let newFilter: ContactsAgendaViewModel.Filter
+        switch sender.selectedSegmentIndex {
+        case 1:
+            newFilter = .All
+        default: //case 0
+            newFilter = .Favourites
+        }
+        self.contactsTableViewController.segmentSelected(newFilter)
     }
     
 }
