@@ -35,7 +35,7 @@ protocol ContactServiceType {
     
 }
 
-final class ContactService : ContactServiceType {
+final class ContactService : NSObject, ContactServiceType {
     
     private let _events : Signal<ContactServiceEvent, ContactsFetchingError>
     private let _signalObserver : Signal<ContactServiceEvent, ContactsFetchingError>.Observer
@@ -50,7 +50,7 @@ final class ContactService : ContactServiceType {
     init(persistenceService : PersistenceServiceType = PersistenceService()) {
         self._persistenceService = persistenceService
         (self._events, self._signalObserver) = Signal.pipe()
-        
+        super.init()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "contactsChanged:", name: CNContactStoreDidChangeNotification, object: nil)
     }
     
