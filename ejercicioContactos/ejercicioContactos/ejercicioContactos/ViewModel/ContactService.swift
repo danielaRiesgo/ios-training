@@ -29,16 +29,15 @@ enum ContactServiceEvent {
 
 protocol ContactServiceType {
     
-    var events : Signal<ContactServiceEvent, ContactsFetchingError> { get }
+    var events : Signal<ContactServiceEvent, NoError> { get }
     func getContacts() -> SignalProducer<[Contact], ContactsFetchingError>
     func updateFavourite(contact: Contact, favourite: Bool) -> SignalProducer<Contact, PersistingError>
     
 }
 
-final class ContactService : NSObject, ContactServiceType {
+final class ContactService : ContactServiceType {
     
-    private let _events : Signal<ContactServiceEvent, ContactsFetchingError>
-    private let _signalObserver : Signal<ContactServiceEvent, ContactsFetchingError>.Observer
+    private let (_events, _signalObserver) = Signal<ContactServiceEvent, NoError>.pipe()
     
     private let _contactStore = CNContactStore()
     private let _persistenceService : PersistenceServiceType
@@ -46,29 +45,29 @@ final class ContactService : NSObject, ContactServiceType {
     private var contacts : [Contact]?
     private var contactsIds : [String: Int] = [:]
     
-    var events : Signal<ContactServiceEvent, ContactsFetchingError> {
+    private var _notificationDisposable: Disposable? = Optional.None
+    private let _notificationCenter: NSNotificationCenter
+    
+    var events : Signal<ContactServiceEvent, NoError> {
         return _events
     }
     
-    init(persistenceService : PersistenceServiceType = PersistenceService()) {
-        self._persistenceService = persistenceService
-        (self._events, self._signalObserver) = Signal.pipe()
-        super.init()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "contactsChanged:", name: CNContactStoreDidChangeNotification, object: nil)
+    init(persistenceService : PersistenceServiceType = PersistenceService(), notificationCenter: NSNotificationCenter = NSNotificationCenter.defaultCenter()) {
+        _persistenceService = persistenceService
+        _notificationCenter = notificationCenter
+        _notificationDisposable = notificationCenter.rac_notifications(CNContactStoreDidChangeNotification)
+            .map { _ in ContactServiceEvent.ContactsChanged }
+            .on(next: { [unowned self] _ in self.invalidateCache() })
+            .start(_signalObserver)
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: CNContactStoreDidChangeNotification, object: nil)
+        _notificationDisposable?.dispose()
     }
     
-    func contactsChanged(notification: NSNotification) {
-        if (notification.name == CNContactStoreDidChangeNotification) {
-            print("La info es: \(notification.userInfo)")
-            self.contacts = nil
-            self.contactsIds = [:]
-            self._signalObserver.sendNext(.ContactsChanged)
-            //Le avisa que los contactos cambiaron, cuando llame a getContacts va a conseguir los nuevos.
-        }
+    func invalidateCache() {
+        contacts = nil
+        contactsIds = [:]
     }
     
     func getContacts() -> SignalProducer<[Contact], ContactsFetchingError> {
@@ -121,13 +120,15 @@ private extension ContactService {
         var contacts: [CNContact] = []
         for container in containers {
             let fetchPredicate = CNContact.predicateForContactsInContainerWithIdentifier(container.identifier)
+            let keys = [
+                CNContactFormatter.descriptorForRequiredKeysForStyle(.FullName),
+                CNContactEmailAddressesKey,
+                CNContactPhoneNumbersKey,
+                CNContactImageDataAvailableKey,
+                CNContactThumbnailImageDataKey
+            ]
             do {
-                let containerResults = try self._contactStore.unifiedContactsMatchingPredicate(fetchPredicate, keysToFetch:
-                    [ CNContactFormatter.descriptorForRequiredKeysForStyle(.FullName),
-                        CNContactEmailAddressesKey,
-                        CNContactPhoneNumbersKey,
-                        CNContactImageDataAvailableKey,
-                        CNContactThumbnailImageDataKey ])
+                let containerResults = try _contactStore.unifiedContactsMatchingPredicate(fetchPredicate, keysToFetch:keys)
                 contacts.appendContentsOf(containerResults)
             } catch {
                 return .Failure(.FetchingContactsFromContainerError(container))

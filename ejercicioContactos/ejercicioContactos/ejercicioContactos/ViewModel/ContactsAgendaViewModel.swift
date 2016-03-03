@@ -46,9 +46,8 @@ final class ContactsAgendaViewModel {
         
         _contacts <~ fetchContacts.values
         _contacts <~ SignalProducer(signal: contactService.events)
-            .flatMap(.Concat) { _ in self.fetchContactsFromService() }
-            .flatMapError { _ in SignalProducer.empty }
-        //print("Va a fetchear")
+            .flatMap(.Concat) { _ in self.fetchContactsFromService().liftError() }
+        
         fetchContacts.apply(.None).start()
     }
     

@@ -9,6 +9,7 @@
 import Foundation
 import Contacts
 import ReactiveCocoa
+import Result
 
 extension CNContactStore {
     
@@ -24,6 +25,14 @@ extension CNContactStore {
                 }
             }
         }
+    }
+    
+}
+
+extension SignalProducer {
+
+    func liftError() -> SignalProducer<Value, NoError> {
+        return self.flatMapError { _ in SignalProducer<Value, NoError>.empty }
     }
     
 }
