@@ -12,9 +12,9 @@ import enum Result.NoError
 
 final class ContactsAgendaViewModel {
     
-    enum Filter : Int {
-        case All = 1
-        case Favourites = 0
+    enum Filter: Int {
+        case All
+        case Favourites
     }
     
     let activeFilter = MutableProperty<Filter>(.All)
@@ -22,60 +22,55 @@ final class ContactsAgendaViewModel {
     private let _contactService : ContactServiceType
     private let _persistenceService : PersistenceServiceType
 
-    private let _contacts : MutableProperty<[ContactViewModel]>
-    let contactsShown : AnyProperty<[ContactViewModel]>
+    private let _contacts = MutableProperty<[ContactViewModel]>([])
+    lazy private(set) var contactsShown: AnyProperty<[ContactViewModel]> = {
+        let filteredContacts = Signal.merge([
+            self._contacts.signal,
+            self.activeFilter.signal.map { _ in self._contacts.value }
+        ]).map(self.filterContacts)
+        return AnyProperty(initialValue: [], signal: filteredContacts)
+    }()
     
-//    private var _foo: Action<AnyObject?, [ContactViewModel], NoError>!
-//    var foo: Action<AnyObject?, [ContactViewModel], NoError> {
-//        return _foo
-//    }
-//    
-//    private(set) var bar: Action<AnyObject?, [ContactViewModel], NoError>!
-//
+    
+    lazy private var fetchContacts: Action<AnyObject?, [ContactViewModel], ContactsFetchingError> = {
+        return Action { _ in self.fetchContactsFromService() }
+    }()
     
     var contactsCount : Int {
         return contactsShown.value.count
     }
     
-    init(contactService: ContactServiceType = ContactService()) {
-        self._contacts = MutableProperty<[ContactViewModel]>([])
-        self._contactService = contactService
+    init(contactService: ContactServiceType = ContactService(), persistenceService: PersistenceServiceType = PersistenceService()) {
+        _contactService = contactService
+        _persistenceService = persistenceService
         
-        let contactsNeedFiltering = SignalProducer<Signal<[ContactViewModel], NoError>, NoError>(values: [self._contacts.signal, self.activeFilter.signal.map { [unowned self] _ in self._contacts.value }]).flatten(.Merge)
-
-        let filteredContacts = contactsNeedFiltering.map { [unowned self] contacts -> [ContactViewModel] in
-            switch self.activeFilter.value {
-            case .Favourites: return contacts.filter({ $0.favourited })
-            default: return contacts
-            }
-        }
-        self.contactsShown = AnyProperty(initialValue: [], producer: filteredContacts)
-        print("Definió los contactsShown")
-
-        
-        let mapping : (event: ContactServiceEvent) -> SignalProducer<[ContactViewModel], ContactsFetchingError> = { event in
-            switch event {
-            case .ContactsChanged:
-                return contactService.getContacts().map { ContactViewModel(contact: $0, contactService: contactService) }
-            case .FavouriteChanged(let newContact):
-                var newContacts = self._contacts.value
-                let index = newContacts.map{$0.id}.indexOf(newContact.id)!
-                newContacts[index] = ContactViewModel(contact: newContact, contactService: contactService)
-                return SignalProducer<[ContactViewModel], ContactsFetchingError>(value: newContacts)
-            }
-        }
-
-        let updatingContactsSP = SignalProducer(signal: contactService.events).flatMap(.Concat, transform: mapping )
-        print("Definió los updatingContactsSP")
-        self._contacts <~ (updatingContactsSP.flatMapError { error in
-            print("Error fetching contacts: \(error)")
-            return SignalProducer.empty
-        })
-        
+        _contacts <~ fetchContacts.values
+        _contacts <~ SignalProducer(signal: contactService.events)
+            .flatMap(.Concat) { _ in self.fetchContactsFromService() }
+            .flatMapError { _ in SignalProducer.empty }
+        //print("Va a fetchear")
+        fetchContacts.apply(.None).start()
     }
     
     subscript(index: Int) -> ContactViewModel {
         return contactsShown.value[index]
+    }
+    
+}
+
+private extension ContactsAgendaViewModel {
+    
+    func fetchContactsFromService() -> SignalProducer<[ContactViewModel], ContactsFetchingError> {
+        return _contactService.getContacts().map { contacts in
+            contacts.map { ContactViewModel(contact: $0, contactService: self._contactService) }
+        }
+    }
+    
+    func filterContacts(contacts: [ContactViewModel]) -> [ContactViewModel] {
+        switch self.activeFilter.value {
+        case .Favourites: return contacts.filter { $0.favourited }
+        default: return self._contacts.value
+        }
     }
     
 }

@@ -9,6 +9,7 @@
 import Foundation
 import Contacts
 import ReactiveCocoa
+import Result
 
 enum ContactsFetchingError : ErrorType {
     case NoPermission(NSError)
@@ -53,6 +54,10 @@ final class ContactService : ContactServiceType {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "contactsChanged:", name: CNContactStoreDidChangeNotification, object: nil)
     }
     
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: CNContactStoreDidChangeNotification, object: nil)
+    }
+    
     func contactsChanged(notification: NSNotification) {
         if (notification.name == CNContactStoreDidChangeNotification) {
             print("La info es: \(notification.userInfo)")
@@ -62,57 +67,79 @@ final class ContactService : ContactServiceType {
     }
     
     func getContacts() -> SignalProducer<[Contact], ContactsFetchingError> {
-        print("Entra a pedir contactos")
-        let requestSP : SignalProducer = self._contactStore.requestAccessForEntityType(.Contacts)
+        //print("Entra a pedir contactos")
+        let requestSP : SignalProducer = self._contactStore.requestAccessForEntityType(.Contacts).observeOn(UIScheduler())
         return requestSP.mapError { ContactsFetchingError.NoPermission($0) }
             .flatMap(.Concat) { _ -> SignalProducer<[Contact], ContactsFetchingError> in
-                let allContainers: [CNContainer]
-                do {
-                    allContainers = try self._contactStore.containersMatchingPredicate(nil)
-                } catch {
-                    return SignalProducer(error: .FetchingContainersError)
-                }
-                var contacts: [CNContact] = []
-                for container in allContainers {
-                    let fetchPredicate = CNContact.predicateForContactsInContainerWithIdentifier(container.identifier)
-                    do {
-                        let containerResults = try self._contactStore.unifiedContactsMatchingPredicate(fetchPredicate, keysToFetch:
-                            [ CNContactFormatter.descriptorForRequiredKeysForStyle(.FullName),
-                                CNContactEmailAddressesKey,
-                                CNContactPhoneNumbersKey,
-                                CNContactImageDataAvailableKey,
-                                CNContactThumbnailImageDataKey ])
-                        contacts.appendContentsOf(containerResults)
-                    } catch {
-                        return SignalProducer(error: .FetchingContactsFromContainerError(container))
-                    }
-                }
-                let favouritesIds = self._persistenceService.getFavourites()
-                return SignalProducer(value: contacts.map(parseContact)
-                    .map { contact in
-                        if (favouritesIds.indexOf(contact.id) != nil) {
-                            return Contact(id: contact.id, name: contact.name, email: contact.email, phoneNumber: contact.phone, imageData: contact.image, favourite: true)
-                        } else {
-                            return contact
-                        }
-                    })
+                let contacts = self.getAllContainers()
+                    .flatMap(self.getAllContacts)
+                    .flatMap(self.getFinalContacts)
+                return SignalProducer(result: contacts)
             }
     }
     
     func updateFavourite(contact: Contact, favourite: Bool) -> SignalProducer<Contact, PersistingError> {
-        return self._persistenceService.updateFavourite(contact, newFavouritedState: favourite)
-            .on(next: { self._signalObserver.sendNext(.FavouriteChanged($0)) })
+        //print("Entra a update")
+        return self._persistenceService.updateFavourite(contact.toggleFavourite())
+            .on(next: { self._signalObserver.sendNext(.FavouriteChanged($0)) }).observeOn(UIScheduler())
     }
     
     
 }
 
-private func parseContact(cnContact: CNContact) -> Contact {
-    //print("Entra a parsear CNContact")
-    let fullName = CNContactFormatter.stringFromContact(cnContact, style: .FullName)!
-    let emailAddress = cnContact.emailAddresses.first?.value as? String
-    let phoneNumber : String? = (cnContact.phoneNumbers.first?.value as? CNPhoneNumber)?.stringValue
-    let imageData : NSData? = cnContact.thumbnailImageData
-    return Contact(id: cnContact.identifier, name: fullName, email: emailAddress, phoneNumber: phoneNumber, imageData: imageData)
+private extension ContactService {
+    
+    func parseContact(cnContact: CNContact) -> Contact {
+        //print("Entra a parsear CNContact")
+        let fullName = CNContactFormatter.stringFromContact(cnContact, style: .FullName)!
+        let emailAddress = cnContact.emailAddresses.first?.value as? String
+        let phoneNumber : String? = (cnContact.phoneNumbers.first?.value as? CNPhoneNumber)?.stringValue
+        let imageData : NSData? = cnContact.thumbnailImageData
+        return Contact(id: cnContact.identifier, name: fullName, email: emailAddress, phoneNumber: phoneNumber, imageData: imageData)
+    }
+    
+    func getAllContainers() -> Result<[CNContainer], ContactsFetchingError> {
+        return Result<[CNContainer], ContactsFetchingError>(attempt: { try self._contactStore.containersMatchingPredicate(nil) })
+    }
+    
+    func getAllContacts(containers: [CNContainer]) -> Result<[CNContact], ContactsFetchingError> {
+        var contacts: [CNContact] = []
+        for container in containers {
+            let fetchPredicate = CNContact.predicateForContactsInContainerWithIdentifier(container.identifier)
+            do {
+                let containerResults = try self._contactStore.unifiedContactsMatchingPredicate(fetchPredicate, keysToFetch:
+                    [ CNContactFormatter.descriptorForRequiredKeysForStyle(.FullName),
+                        CNContactEmailAddressesKey,
+                        CNContactPhoneNumbersKey,
+                        CNContactImageDataAvailableKey,
+                        CNContactThumbnailImageDataKey ])
+                contacts.appendContentsOf(containerResults)
+            } catch {
+                return .Failure(.FetchingContactsFromContainerError(container))
+            }
+        }
+        return .Success(contacts)
+    }
+    
+    func getFinalContacts(cncontacts: [CNContact]) -> Result<[Contact], ContactsFetchingError> {
+        let favouritesIds = self._persistenceService.getFavourites()
+        let contacts : [Contact] = cncontacts.map(self.parseContact)
+        let finalContacts = contacts.map { contact -> Contact in
+            if (favouritesIds.indexOf(contact.id) != nil) {
+                return Contact(id: contact.id, name: contact.name, email: contact.email, phoneNumber: contact.phone, imageData: contact.image, favourite: true)
+            } else {
+                return contact
+            }
+        }
+        return .Success(finalContacts)
+    }
+    
+}
+
+private extension Contact {
+    
+    func toggleFavourite() -> Contact {
+        return Contact(id: id, name: name, email: email, phoneNumber: phone, imageData: image, favourite: !favourited)
+    }
     
 }

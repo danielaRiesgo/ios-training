@@ -20,13 +20,14 @@ protocol PersistenceServiceType {
     
     /* Return an array with the ids (strings) of the favourited contacts */
     func getFavourites() -> [String]
-    func updateFavourite(contact: Contact, newFavouritedState: Bool) -> SignalProducer<Contact, PersistingError>
+    func updateFavourite(newContact: Contact) -> SignalProducer<Contact, PersistingError>
     
 }
 
 final class PersistenceService : PersistenceServiceType {
 
     let realm : Realm
+    var favourites: [String] = []
     
     init(path: String = "favouritesDatabase") {
         var config = Realm.Configuration()
@@ -43,27 +44,58 @@ final class PersistenceService : PersistenceServiceType {
     }
     
     func getFavourites() -> [String] {
-        let favourites = self.realm.objects(Contact)    // Parece que nunca falla
-        return favourites.map { $0.id }
+        /*let favourites = self.realm.objects(ContactRecord)    // Parece que nunca falla
+        return favourites.map { $0.id }*/
+        return favourites
     }
     
-    func updateFavourite(contact: Contact, newFavouritedState: Bool) -> SignalProducer<Contact, PersistingError> {
-        let newContact = Contact(id: contact.id, name: contact.name, email: contact.email, phoneNumber: contact.phone, imageData: contact.image, favourite: newFavouritedState)
-        if (newFavouritedState == true) {
-            do { try realm.write { realm.add(newContact) }
+    func updateFavourite(newContact: Contact) -> SignalProducer<Contact, PersistingError> {
+        if (newContact.favourited == true) {
+            favourites.append(newContact.id)
+            /*do { try realm.write { realm.add(ContactRecord(newContact)) }
             } catch { error
-                //print("Error al escribir el contacto de id \(contact.id): \(error)")
+                //print("Error al escribir el contacto de id \(newContact.id): \(error)")
                 return SignalProducer(error: .AddFavouriteError(newContact))
-            }
+            }*/
         } else {
-            let persistedContact = realm.objects(Contact).filter("id == \(contact.id)").first!
-            do { try realm.write { realm.delete(persistedContact) }
+            favourites.removeAtIndex(favourites.indexOf(newContact.id)!)
+            /*let persistedContactRecord = realm.objects(ContactRecord).filter("id == \(newContact.id)").first!
+            do { try realm.write { realm.delete(persistedContactRecord) }
             } catch { error
-                //print("Error al borrar el contacto de id \(contact.id): \(error)")
+                //print("Error al borrar el contacto de id \(newContact.id): \(error)")
                 return SignalProducer(error: .DeleteFavouriteError(newContact))
-            }
+            }*/
         }
-        return SignalProducer(value: newContact)
+        return SignalProducer(value: newContact).observeOn(UIScheduler())
     }
     
 }
+
+
+final class ContactRecord : Object {
+    
+    dynamic var id: String
+    var favourited: Bool
+    
+    convenience init(contact: Contact) {
+        self.init()
+        self.id = contact.id
+        self.favourited = contact.favourited
+    }
+    
+    required init() {
+        self.id = ""
+        self.favourited = true
+        super.init()
+    }
+    
+    override class func primaryKey() -> String {
+        return "id"
+    }
+    
+    override static func ignoredProperties() -> [String] {
+        return ["favourited"]
+    }
+    
+}
+

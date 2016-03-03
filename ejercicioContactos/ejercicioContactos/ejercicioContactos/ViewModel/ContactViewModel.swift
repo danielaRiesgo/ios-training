@@ -43,7 +43,7 @@ struct ContactViewModel {
     }
     
     func changeFavouriteState() {
-        self._contactService.updateFavourite(self._contact, favourite: !self.favourited)
+        self._contactService.updateFavourite(self._contact, favourite: !self.favourited).start()
     }
     
 }
