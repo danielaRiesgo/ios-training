@@ -43,6 +43,9 @@ final class ContactService : NSObject, ContactServiceType {
     private let _contactStore = CNContactStore()
     private let _persistenceService : PersistenceServiceType
     
+    private var contacts : [Contact]?
+    private var contactsIds : [String: Int] = [:]
+    
     var events : Signal<ContactServiceEvent, ContactsFetchingError> {
         return _events
     }
@@ -61,6 +64,8 @@ final class ContactService : NSObject, ContactServiceType {
     func contactsChanged(notification: NSNotification) {
         if (notification.name == CNContactStoreDidChangeNotification) {
             print("La info es: \(notification.userInfo)")
+            self.contacts = nil
+            self.contactsIds = [:]
             self._signalObserver.sendNext(.ContactsChanged)
             //Le avisa que los contactos cambiaron, cuando llame a getContacts va a conseguir los nuevos.
         }
@@ -68,12 +73,19 @@ final class ContactService : NSObject, ContactServiceType {
     
     func getContacts() -> SignalProducer<[Contact], ContactsFetchingError> {
         //print("Entra a pedir contactos")
+        if (contacts != nil) { return SignalProducer(value: contacts!) }
         let requestSP : SignalProducer = self._contactStore.requestAccessForEntityType(.Contacts).observeOn(UIScheduler())
         return requestSP.mapError { ContactsFetchingError.NoPermission($0) }
             .flatMap(.Concat) { _ -> SignalProducer<[Contact], ContactsFetchingError> in
                 let contacts = self.getAllContainers()
                     .flatMap(self.getAllContacts)
                     .flatMap(self.getFinalContacts)
+                self.contacts = contacts.value
+                if (self.contacts != nil) {
+                    for (index, contact) in self.contacts!.enumerate() {
+                        self.contactsIds[contact.id] = index
+                    }
+                }
                 return SignalProducer(result: contacts)
             }
     }
@@ -81,7 +93,10 @@ final class ContactService : NSObject, ContactServiceType {
     func updateFavourite(contact: Contact, favourite: Bool) -> SignalProducer<Contact, PersistingError> {
         //print("Entra a update")
         return self._persistenceService.updateFavourite(contact.toggleFavourite())
-            .on(next: { self._signalObserver.sendNext(.FavouriteChanged($0)) }).observeOn(UIScheduler())
+            .on(next: {
+                self.contacts?[self.contactsIds[$0.id]!] = $0
+                self._signalObserver.sendNext(.FavouriteChanged($0))
+            }).observeOn(UIScheduler())
     }
     
     
@@ -131,7 +146,7 @@ private extension ContactService {
                 return contact
             }
         }
-        return .Success(finalContacts)
+        return .Success(finalContacts.sort { $0.name < $1.name })
     }
     
 }
